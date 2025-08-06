@@ -57,7 +57,7 @@ export default function ApiReferencePage() {
     }
   }
 }`,
-        exampleUsageLink: "/examples#contact-form"
+        exampleUsageLink: "/samples#contact-form"
       },
       {
         name: "chats_find",
@@ -89,7 +89,7 @@ export default function ApiReferencePage() {
     }
   }
 }`,
-        exampleUsageLink: "/examples#contact-form"
+        exampleUsageLink: "/samples#contact-form"
       }
     ],
     projects: [
@@ -197,13 +197,13 @@ export default function ApiReferencePage() {
       legacy: "generate_component",
       modern: "chats_create",
       description: "Legacy alias for component generation",
-      exampleLink: "/examples#contact-form"
+      exampleLink: "/samples#contact-form"
     },
     {
       legacy: "iterate_component",
       modern: "chats_send_message",
       description: "Legacy alias for component iteration",
-      exampleLink: "/examples#saas-landing"
+      exampleLink: "/samples#saas-landing"
     }
   ]
 
@@ -248,13 +248,13 @@ export default function ApiReferencePage() {
         </div>
       </section>
 
-      {/* Key Examples Section */}
+      {/* Key Samples Section */}
       <section className="py-8 sm:py-12 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Quick Start Examples</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Quick Start Samples</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <Link 
-              href="/examples#contact-form"
+              href="/samples#contact-form"
               className="block p-4 border rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all min-h-[44px] flex flex-col justify-center"
             >
               <h3 className="font-semibold text-gray-900 mb-1">Generate a Component</h3>
@@ -264,7 +264,7 @@ export default function ApiReferencePage() {
               </span>
             </Link>
             <Link 
-              href="/examples#saas-landing"
+              href="/samples#saas-landing"
               className="block p-4 border rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all min-h-[44px] flex flex-col justify-center"
             >
               <h3 className="font-semibold text-gray-900 mb-1">Iterate on Components</h3>
@@ -274,7 +274,7 @@ export default function ApiReferencePage() {
               </span>
             </Link>
             <Link 
-              href="/examples#analytics-dashboard"
+              href="/samples#analytics-dashboard"
               className="block p-4 border rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all min-h-[44px] flex flex-col justify-center"
             >
               <h3 className="font-semibold text-gray-900 mb-1">Complex UI Patterns</h3>
@@ -286,7 +286,7 @@ export default function ApiReferencePage() {
           </div>
           <div className="mt-4 sm:mt-6 p-4 bg-gray-50 border border-gray-200 rounded-lg">
             <p className="text-sm text-gray-700">
-              <strong>Tip:</strong> Check out our <Link href="/examples" className="text-blue-600 hover:text-blue-700">examples page</Link> for comprehensive demonstrations of each tool in action, including prompts, generated code, and iteration workflows.
+              <strong>Tip:</strong> Check out our <Link href="/samples" className="text-blue-600 hover:text-blue-700">examples page</Link> for comprehensive demonstrations of each tool in action, including prompts, generated code, and iteration workflows.
             </p>
           </div>
         </div>

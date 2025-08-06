@@ -264,7 +264,7 @@ export function ${componentName}() {
   /**
    * Generate all examples from a list
    */
-  async generateAllExamples(
+  async generateAllSamples(
     examples: Array<Omit<Example, 'code' | 'chatId' | 'generatedWithV0'>>
   ): Promise<Example[]> {
     const generated: Example[] = [];
@@ -363,8 +363,8 @@ export async function generateExample(
 /**
  * Utility function to generate multiple examples
  */
-export async function generateExamples(
+export async function generateSamples(
   examples: Array<Omit<Example, 'code' | 'chatId' | 'generatedWithV0'>>
 ): Promise<Example[]> {
-  return exampleGenerator.generateAllExamples(examples);
+  return exampleGenerator.generateAllSamples(examples);
 }

@@ -44,7 +44,7 @@ export function ExampleGallery({ examples }: { examples: Example[] }) {
   }
 
   // Filter examples based on selected category and search query
-  const filteredExamples = React.useMemo(() => {
+  const filteredSamples = React.useMemo(() => {
     let filtered = examples
 
     // Filter by category
@@ -96,7 +96,7 @@ export function ExampleGallery({ examples }: { examples: Example[] }) {
           onClick={() => handleCategorySelect(undefined)}
           className="transition-colors"
         >
-          All Examples
+          All Samples
         </Button>
         {categories.map((category) => (
           <Button
@@ -113,7 +113,7 @@ export function ExampleGallery({ examples }: { examples: Example[] }) {
 
       {/* Results Count */}
       <div className="text-sm text-muted-foreground">
-        Showing {filteredExamples.length} {filteredExamples.length === 1 ? "example" : "examples"}
+        Showing {filteredSamples.length} {filteredSamples.length === 1 ? "example" : "examples"}
         {selectedCategory && ` in ${categoryDisplayNames[selectedCategory]}`}
         {debouncedSearchQuery && ` matching "${debouncedSearchQuery}"`}
       </div>
@@ -128,7 +128,7 @@ export function ExampleGallery({ examples }: { examples: Example[] }) {
           "lg:grid-cols-3"
         )}
       >
-        {filteredExamples.map((example) => (
+        {filteredSamples.map((example) => (
           <ExampleCard
             key={example.id}
             example={example}
@@ -138,7 +138,7 @@ export function ExampleGallery({ examples }: { examples: Example[] }) {
       </div>
 
       {/* Empty State */}
-      {filteredExamples.length === 0 && (
+      {filteredSamples.length === 0 && (
         <div className="text-center py-12">
           <p className="text-muted-foreground">
             {debouncedSearchQuery 

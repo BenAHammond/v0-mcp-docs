@@ -12,7 +12,7 @@ export function Nav() {
   const links = [
     { href: "/", label: "Home" },
     { href: "/getting-started", label: "Getting Started" },
-    { href: "/examples", label: "Examples" },
+    { href: "/samples", label: "Samples" },
     { href: "/api-reference", label: "API Reference" },
     { href: "https://github.com/BenAHammond/v0-mcp-server", label: "GitHub", external: true }
   ]

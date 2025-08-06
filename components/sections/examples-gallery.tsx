@@ -1,16 +1,16 @@
 "use client"
 
 import React from 'react'
-import { ExampleWrapper } from '@/components/examples/example-wrapper'
-import { PartyWelcomeCard } from '@/components/examples/party-welcome-card'
-import { OceanInfoCard } from '@/components/examples/ocean-info-card'
-import { GameRulesList } from '@/components/examples/game-rules-list'
-import { RecipeCard } from '@/components/examples/recipe-card'
-import { ContactForm } from '@/components/examples/contact-form'
+import { ExampleWrapper } from '@/components/samples/example-wrapper'
+import { PartyWelcomeCard } from '@/components/samples/party-welcome-card'
+import { OceanInfoCard } from '@/components/samples/ocean-info-card'
+import { GameRulesList } from '@/components/samples/game-rules-list'
+import { RecipeCard } from '@/components/samples/recipe-card'
+import { ContactForm } from '@/components/samples/contact-form'
 import { examplePrompts } from '@/data/example-prompts'
 import { componentCode } from '@/data/component-code'
 
-export function ExamplesGallery() {
+export function SamplesGallery() {
   // Map component imports to their IDs
   const componentMap = {
     'party-welcome': PartyWelcomeCard,

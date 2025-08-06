@@ -1,11 +1,11 @@
 
-import { ExamplesGallery } from "@/components/sections/examples-gallery"
+import { SamplesGallery } from "@/components/sections/examples-gallery"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ArrowRight, Code2, FileCode } from "lucide-react"
 
-export default function ExamplesPage() {
+export default function SamplesPage() {
 
   return (
     <div className="min-h-screen bg-white">
@@ -13,7 +13,7 @@ export default function ExamplesPage() {
       <section className="bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50 py-8 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            Examples
+            Samples
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 max-w-3xl">
             See what v0 can generate from simple prompts. Each example includes the prompt used and the live component it produced.
@@ -24,7 +24,7 @@ export default function ExamplesPage() {
       {/* Example Gallery Section */}
       <section className="py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ExamplesGallery />
+          <SamplesGallery />
         </div>
       </section>
 
@@ -45,7 +45,7 @@ export default function ExamplesPage() {
               </CardHeader>
               <CardContent>
                 <Button asChild variant="outline">
-                  <Link href="https://github.com/BenAHammond/v0-mcp-server/tree/main/examples" target="_blank" rel="noopener noreferrer">
+                  <Link href="https://github.com/BenAHammond/v0-mcp-server/tree/main/samples" target="_blank" rel="noopener noreferrer">
                     View on GitHub
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>

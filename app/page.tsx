@@ -368,7 +368,7 @@ export function LoginForm() {
         </div>
       </section>
 
-      {/* Examples Preview Section */}
+      {/* Samples Preview Section */}
       <section className="py-16 sm:py-20 lg:py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 sm:mb-16">
@@ -388,7 +388,7 @@ export function LoginForm() {
                   Learn how to parse and transform v0.dev responses for your specific needs
                 </CardDescription>
                 <Button asChild variant="outline" size="sm" className="min-h-[36px] sm:min-h-[40px]">
-                  <Link href="/examples#chat-response">
+                  <Link href="/samples#chat-response">
                     View Example
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
@@ -405,7 +405,7 @@ export function LoginForm() {
                   Automatically detect programming languages for syntax highlighting
                 </CardDescription>
                 <Button asChild variant="outline" size="sm" className="min-h-[36px] sm:min-h-[40px]">
-                  <Link href="/examples#language-detection">
+                  <Link href="/samples#language-detection">
                     View Example
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
@@ -422,7 +422,7 @@ export function LoginForm() {
                   Implement comprehensive logging for debugging and monitoring
                 </CardDescription>
                 <Button asChild variant="outline" size="sm" className="min-h-[36px] sm:min-h-[40px]">
-                  <Link href="/examples#logging">
+                  <Link href="/samples#logging">
                     View Example
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
@@ -433,8 +433,8 @@ export function LoginForm() {
           
           <div className="text-center mt-8 sm:mt-12">
             <Button asChild size="lg" className="min-h-[44px] px-6">
-              <Link href="/examples">
-                View All Examples
+              <Link href="/samples">
+                View All Samples
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
