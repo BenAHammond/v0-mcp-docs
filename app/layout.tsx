@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "v0 MCP Server - Generate React Components with AI",
-  description: "Generate React components with AI directly in Claude Desktop using the v0 MCP Server",
+  description: "Generate beautiful React components with AI using the v0 MCP Server",
 }
 
 export default function RootLayout({
