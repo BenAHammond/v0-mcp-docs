@@ -81,7 +81,7 @@ export default function GettingStartedPage() {
                   https://v0.dev/chat/settings/keys
                 </CodeBlock>
                 <p className="text-sm text-gray-500">
-                  Replace <InlineCode>YOUR_V0_API_KEY</InlineCode> with your actual API key
+                  Replace <InlineCode>your-key-here</InlineCode> with your actual API key
                 </p>
               </div>
             </div>
