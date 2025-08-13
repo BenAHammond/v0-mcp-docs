@@ -11,68 +11,6 @@ export default function HomePage() {
     <div className="min-h-screen bg-white">
       <HomeHero />
 
-      {/* What is v0? Section */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">What is v0?</h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-6 sm:mb-8 px-2">
-              v0 is Vercel's AI-powered UI generation tool that creates React components from text descriptions. 
-              With the v0 MCP Server, you can access v0's powerful component generation directly within Claude Desktop.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-              <Button asChild variant="outline" size="lg" className="min-h-[44px] px-6">
-                <Link href="https://v0.dev" target="_blank" rel="noopener noreferrer">
-                  Visit v0.dev
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="min-h-[44px] px-6">
-                <Link href="https://v0.dev/docs" target="_blank" rel="noopener noreferrer">
-                  v0 Documentation
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mt-12 sm:mt-16">
-            <Card className="border-0 shadow-lg">
-              <CardHeader className="p-5 sm:p-6">
-                <CardTitle className="text-lg sm:text-xl">AI-Powered UI</CardTitle>
-              </CardHeader>
-              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
-                <CardDescription>
-                  v0 uses advanced AI models to understand your component requirements and generate production-ready React code
-                </CardDescription>
-              </CardContent>
-            </Card>
-            
-            <Card className="border-0 shadow-lg">
-              <CardHeader className="p-5 sm:p-6">
-                <CardTitle className="text-lg sm:text-xl">Instant Previews</CardTitle>
-              </CardHeader>
-              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
-                <CardDescription>
-                  See live previews of your components on v0.dev and iterate with natural language to perfect your designs
-                </CardDescription>
-              </CardContent>
-            </Card>
-            
-            <Card className="border-0 shadow-lg">
-              <CardHeader className="p-5 sm:p-6">
-                <CardTitle className="text-lg sm:text-xl">Modern Stack</CardTitle>
-              </CardHeader>
-              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
-                <CardDescription>
-                  Built for modern React with TypeScript, Tailwind CSS, and popular component libraries like shadcn/ui
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
       {/* Quick Start Section */}
       <section className="py-16 sm:py-20 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -155,6 +93,7 @@ export default function HomePage() {
         </div>
       </section>
 
+
       {/* Features Section */}
       <section className="py-16 sm:py-20 lg:py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -222,8 +161,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      
 
       {/* Code Example Section */}
       <section className="py-16 sm:py-20 lg:py-24 bg-white">
@@ -304,6 +241,69 @@ export function LoginForm() {
         </div>
       </section>
 
+      {/* What is v0? Section */}
+      <section className="py-16 sm:py-20 lg:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">What is v0?</h2>
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-6 sm:mb-8 px-2">
+              v0 is Vercel's AI-powered UI generation tool that creates React components from text descriptions. 
+              With the v0 MCP Server, you can access v0's powerful component generation directly within Claude Desktop.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              <Button asChild variant="outline" size="lg" className="min-h-[44px] px-6">
+                <Link href="https://v0.dev" target="_blank" rel="noopener noreferrer">
+                  Visit v0.dev
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="min-h-[44px] px-6">
+                <Link href="https://v0.dev/docs" target="_blank" rel="noopener noreferrer">
+                  v0 Documentation
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mt-12 sm:mt-16">
+            <Card className="border-0 shadow-lg">
+              <CardHeader className="p-5 sm:p-6">
+                <CardTitle className="text-lg sm:text-xl">AI-Powered UI</CardTitle>
+              </CardHeader>
+              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
+                <CardDescription>
+                  v0 uses advanced AI models to understand your component requirements and generate production-ready React code
+                </CardDescription>
+              </CardContent>
+            </Card>
+            
+            <Card className="border-0 shadow-lg">
+              <CardHeader className="p-5 sm:p-6">
+                <CardTitle className="text-lg sm:text-xl">Instant Previews</CardTitle>
+              </CardHeader>
+              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
+                <CardDescription>
+                  See live previews of your components on v0.dev and iterate with natural language to perfect your designs
+                </CardDescription>
+              </CardContent>
+            </Card>
+            
+            <Card className="border-0 shadow-lg">
+              <CardHeader className="p-5 sm:p-6">
+                <CardTitle className="text-lg sm:text-xl">Modern Stack</CardTitle>
+              </CardHeader>
+              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
+                <CardDescription>
+                  Built for modern React with TypeScript, Tailwind CSS, and popular component libraries like shadcn/ui
+                </CardDescription>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      
       {/* Samples Preview Section */}
       <section className="py-16 sm:py-20 lg:py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
