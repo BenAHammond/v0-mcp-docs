@@ -73,74 +73,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Powerful Features</h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto px-2">
-              Everything you need to generate and iterate on React components with AI
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardHeader className="p-5 sm:p-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-4">
-                  <Zap className="h-6 w-6 text-white" />
-                </div>
-                <CardTitle className="text-lg sm:text-xl">AI-Powered Generation</CardTitle>
-              </CardHeader>
-              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
-                <CardDescription>
-                  Generate components from natural language descriptions using advanced AI models
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardHeader className="p-5 sm:p-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
-                  <Puzzle className="h-6 w-6 text-white" />
-                </div>
-                <CardTitle className="text-lg sm:text-xl">MCP Integration</CardTitle>
-              </CardHeader>
-              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
-                <CardDescription>
-                  Seamlessly works within Claude Desktop through the Model Context Protocol
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardHeader className="p-5 sm:p-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-lg flex items-center justify-center mb-4">
-                  <RefreshCw className="h-6 w-6 text-white" />
-                </div>
-                <CardTitle className="text-lg sm:text-xl">Iterate & Refine</CardTitle>
-              </CardHeader>
-              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
-                <CardDescription>Modify and improve components with follow-up prompts and iterations</CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardHeader className="p-5 sm:p-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center mb-4">
-                  <Shield className="h-6 w-6 text-white" />
-                </div>
-                <CardTitle className="text-lg sm:text-xl">TypeScript Ready</CardTitle>
-              </CardHeader>
-              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
-                <CardDescription>
-                  Full type safety out of the box with TypeScript support and proper typing
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
       {/* Quick Start Section */}
       <section className="py-16 sm:py-20 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -222,6 +154,76 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Features Section */}
+      <section className="py-16 sm:py-20 lg:py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Powerful Features</h2>
+            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto px-2">
+              Everything you need to generate and iterate on React components with AI
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardHeader className="p-5 sm:p-6">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-4">
+                  <Zap className="h-6 w-6 text-white" />
+                </div>
+                <CardTitle className="text-lg sm:text-xl">AI-Powered Generation</CardTitle>
+              </CardHeader>
+              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
+                <CardDescription>
+                  Generate components from natural language descriptions using advanced AI models
+                </CardDescription>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardHeader className="p-5 sm:p-6">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
+                  <Puzzle className="h-6 w-6 text-white" />
+                </div>
+                <CardTitle className="text-lg sm:text-xl">MCP Integration</CardTitle>
+              </CardHeader>
+              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
+                <CardDescription>
+                  Seamlessly works within Claude Desktop through the Model Context Protocol
+                </CardDescription>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardHeader className="p-5 sm:p-6">
+                <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-lg flex items-center justify-center mb-4">
+                  <RefreshCw className="h-6 w-6 text-white" />
+                </div>
+                <CardTitle className="text-lg sm:text-xl">Iterate & Refine</CardTitle>
+              </CardHeader>
+              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
+                <CardDescription>Modify and improve components with follow-up prompts and iterations</CardDescription>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardHeader className="p-5 sm:p-6">
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center mb-4">
+                  <Shield className="h-6 w-6 text-white" />
+                </div>
+                <CardTitle className="text-lg sm:text-xl">TypeScript Ready</CardTitle>
+              </CardHeader>
+              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
+                <CardDescription>
+                  Full type safety out of the box with TypeScript support and proper typing
+                </CardDescription>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      
 
       {/* Code Example Section */}
       <section className="py-16 sm:py-20 lg:py-24 bg-white">
