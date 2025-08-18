@@ -23,13 +23,31 @@ export default function HomePage() {
 
           {/* Installation Method Cards - Stacked vertically for better readability */}
           <div className="max-w-3xl mx-auto space-y-6">
-            {/* Claude Code Installation (Most Prominent) */}
+            
+            {/* NPX Quick Start */}
+            <Card className="border-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardHeader className="p-5 sm:p-6">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
+                  <Download className="h-6 w-6 text-white" />
+                </div>
+                <CardTitle className="text-lg sm:text-xl">NPX</CardTitle>
+                <CardDescription className="text-sm sm:text-base">
+                 Install and Run in a Single Line:
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
+                <CodeBlock language="bash">
+                  V0_API_KEY="your-key-here" npx v0-mcp-server
+                </CodeBlock>
+              </CardContent>
+            </Card>
+
             <Card className="border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-blue-50 shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardHeader className="p-5 sm:p-6">
                 <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-4">
                   <Zap className="h-6 w-6 text-white" />
                 </div>
-                <CardTitle className="text-lg sm:text-xl">Claude Code (Recommended)</CardTitle>
+                <CardTitle className="text-lg sm:text-xl">Or add directly to Claude Code</CardTitle>
                 <CardDescription className="text-sm sm:text-base">
                   The fastest way to get started - install directly into Claude
                 </CardDescription>
@@ -41,44 +59,6 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            {/* NPX Quick Start */}
-            <Card className="border-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardHeader className="p-5 sm:p-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
-                  <Download className="h-6 w-6 text-white" />
-                </div>
-                <CardTitle className="text-lg sm:text-xl">NPX</CardTitle>
-                <CardDescription className="text-sm sm:text-base">
-                  No installation needed - run the server directly
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
-                <CodeBlock language="bash">
-                  V0_API_KEY="your-key-here" npx v0-mcp-server
-                </CodeBlock>
-              </CardContent>
-            </Card>
-
-            {/* Manual Configuration */}
-            <Card className="border-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardHeader className="p-5 sm:p-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-gray-500 to-gray-600 rounded-lg flex items-center justify-center mb-4">
-                  <Settings className="h-6 w-6 text-white" />
-                </div>
-                <CardTitle className="text-lg sm:text-xl">Manual Setup</CardTitle>
-                <CardDescription className="text-sm sm:text-base">
-                  Configure Claude Desktop manually for advanced setups
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
-                <Button asChild variant="outline" className="w-full min-h-[44px]">
-                  <Link href="/getting-started#manual-configuration">
-                    View Configuration
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
           </div>
 
           {/* Get API Key Note */}
