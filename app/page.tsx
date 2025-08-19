@@ -30,10 +30,7 @@ export default function HomePage() {
                 <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
                   <Download className="h-6 w-6 text-white" />
                 </div>
-                <CardTitle className="text-lg sm:text-xl">NPX</CardTitle>
-                <CardDescription className="text-sm sm:text-base">
-                 Install and Run in a Single Line:
-                </CardDescription>
+                <CardTitle className="text-lg sm:text-xl">Install and Run in a Single Line</CardTitle>
               </CardHeader>
               <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
                 <CodeBlock language="bash">
