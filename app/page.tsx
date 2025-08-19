@@ -1,74 +1,16 @@
-import { Zap, Puzzle, RefreshCw, Shield, Download, Settings, Play, Key, ArrowRight } from "lucide-react"
+import { Zap, Puzzle, RefreshCw, Shield, Download, Settings, Play, Key, ArrowRight, Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
-import { HomeHero } from "@/components/sections/home-hero"
+import HeroSection from "@/components/HeroSection"
 import { CodeExample } from "@/components/client/sections/code-examples"
 import { CodeBlock, InlineCode, CommandBlock } from "@/components/client/sections/code-snippets"
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
-      <HomeHero />
+      <HeroSection />
 
-      {/* Quick Start Section */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Quick Start</h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto px-2">
-              Get up and running in seconds with these simple commands
-            </p>
-          </div>
-
-          {/* Installation Method Cards - Stacked vertically for better readability */}
-          <div className="max-w-3xl mx-auto space-y-6">
-            
-            {/* NPX Quick Start */}
-            <Card className="border-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardHeader className="p-5 sm:p-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
-                  <Download className="h-6 w-6 text-white" />
-                </div>
-                <CardTitle className="text-lg sm:text-xl">Install and Run in a Single Line</CardTitle>
-              </CardHeader>
-              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
-                <CodeBlock language="bash">
-                  V0_API_KEY="your-key-here" npx v0-mcp-server
-                </CodeBlock>
-              </CardContent>
-            </Card>
-
-            <Card className="border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-blue-50 shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardHeader className="p-5 sm:p-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-4">
-                  <Zap className="h-6 w-6 text-white" />
-                </div>
-                <CardTitle className="text-lg sm:text-xl">Or add directly to Claude Code</CardTitle>
-                <CardDescription className="text-sm sm:text-base">
-                  The fastest way to get started - install directly into Claude
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
-                <CodeBlock language="bash">
-                  claude mcp add v0-server -e V0_API_KEY="your-key-here" -- npx v0-mcp-server
-                </CodeBlock>
-              </CardContent>
-            </Card>
-
-          </div>
-
-          {/* Get API Key Note */}
-          <div className="mt-8 sm:mt-12 text-center px-4">
-            <p className="text-sm sm:text-base text-gray-600 mb-4">
-              Need an API key? Get yours from{" "}
-              <Link href="https://v0.dev/chat/settings/keys" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:text-purple-700 font-medium">
-                v0.dev/chat/settings/keys
-              </Link>
-            </p>
-          </div>
-        </div>
-      </section>
 
 
       {/* Features Section */}
@@ -76,7 +18,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Powerful Features</h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto px-2">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto px-2 mb-4">
               Everything you need to generate and iterate on React components with AI
             </p>
           </div>
@@ -127,11 +69,11 @@ export default function HomePage() {
                 <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center mb-4">
                   <Shield className="h-6 w-6 text-white" />
                 </div>
-                <CardTitle className="text-lg sm:text-xl">TypeScript Ready</CardTitle>
+                <CardTitle className="text-lg sm:text-xl">Open Source</CardTitle>
               </CardHeader>
               <CardContent className="p-5 sm:p-6 pt-0 sm:pt-0">
                 <CardDescription>
-                  Full type safety out of the box with TypeScript support and proper typing
+                  MIT licensed and community-driven. Fork, contribute, and help shape the future
                 </CardDescription>
               </CardContent>
             </Card>
@@ -360,7 +302,7 @@ export function LoginForm() {
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6">Ready to Get Started?</h2>
           <p className="text-lg sm:text-xl text-purple-100 mb-6 sm:mb-8 px-2">
-            Join thousands of developers using v0 MCP Server to accelerate their React development
+            Join our open source community and help make v0 MCP Server even better
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
             <Button asChild size="lg" variant="secondary" className="min-h-[44px] px-6">
@@ -375,7 +317,10 @@ export function LoginForm() {
               size="lg"
               className="border-white text-white hover:bg-white hover:text-purple-600 bg-transparent min-h-[44px] px-6"
             >
-              <Link href="/api-reference">API Reference</Link>
+              <Link href="https://github.com/BenAHammond/v0-mcp-server" target="_blank" rel="noopener noreferrer">
+                <Github className="mr-2 h-4 w-4" />
+                Contribute on GitHub
+              </Link>
             </Button>
           </div>
         </div>
