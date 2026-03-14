@@ -3,71 +3,80 @@
 import Link from "next/link"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { MobileMenu } from "@/components/client/navigation/mobile-menu"
 
 export function Nav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const links = [
     { href: "/", label: "Home" },
-    { href: "/getting-started", label: "Getting Started" },
+    { href: "/getting-started", label: "Install" },
+    { href: "/api-reference", label: "API" },
     { href: "/samples", label: "Samples" },
-    { href: "/api-reference", label: "API Reference" },
     { href: "https://github.com/BenAHammond/v0-mcp-server", label: "GitHub", external: true }
   ]
 
   return (
     <>
-      <nav className="border-b bg-white sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex">
-              <Link href="/" className="flex items-center">
-                <span className="text-xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 bg-clip-text text-transparent">
-                  v0 MCP Server
-                </span>
-              </Link>
-              <div className="hidden sm:ml-8 sm:flex sm:space-x-8">
-                {links.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                    {...(link.external && { target: "_blank", rel: "noopener noreferrer" })}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            <div className="flex items-center sm:hidden">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-11 w-11"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                aria-label="Toggle mobile menu"
+      <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
+        <div className="mx-auto flex h-14 max-w-4xl items-center justify-between px-4 sm:px-6">
+          <Link
+            href="/"
+            className="flex items-center gap-2 font-semibold text-foreground no-underline hover:text-primary transition-colors"
+          >
+            <span className="text-primary">v0</span>
+            <span className="text-muted-foreground">MCP Server</span>
+          </Link>
+
+          <nav className="hidden sm:flex sm:items-center sm:gap-6">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                {...(link.external && { target: "_blank", rel: "noopener noreferrer" })}
               >
-                {isMobileMenuOpen ? (
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                ) : (
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                )}
-              </Button>
-            </div>
-          </div>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <button
+            type="button"
+            className="sm:hidden flex h-10 w-10 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
+          >
+            {isMobileMenuOpen ? (
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
         </div>
-      </nav>
-      <MobileMenu 
-        isOpen={isMobileMenuOpen} 
-        onClose={() => setIsMobileMenuOpen(false)} 
-        links={links}
-      />
+
+        {isMobileMenuOpen && (
+          <div className="sm:hidden border-t border-border bg-card px-4 py-3">
+            <nav className="flex flex-col gap-1">
+              {links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  {...(link.external && { target: "_blank", rel: "noopener noreferrer" })}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        )}
+      </header>
     </>
   )
 }

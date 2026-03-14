@@ -112,7 +112,7 @@ export class ExampleGenerator {
   /**
    * Generate a single example using v0
    * Note: This is a placeholder implementation since we're using MCP tools
-   * In a real implementation, this would call the mcp__v0-server__generate_component tool
+   * In a real implementation, this would call the mcp__v0-mcp-server__generate tool
    */
   async generateExample(
     baseExample: Omit<Example, 'code' | 'chatId' | 'generatedWithV0'>
@@ -128,9 +128,9 @@ export class ExampleGenerator {
       console.log(`Generating example: ${baseExample.id}`);
       
       // In a real implementation with MCP tools available, this would be:
-      // const result = await mcp__v0_server__generate_component({
-      //   description: baseExample.prompt,
-      //   options: {
+      // const result = await mcp__v0_mcp_server__generate({
+      //   prompt: baseExample.prompt,
+      //   // options: {
       //     framework: 'react',
       //     styling: 'tailwind',
       //     typescript: true
@@ -183,9 +183,9 @@ export class ExampleGenerator {
     for (const iteration of iterations) {
       try {
         // In a real implementation with MCP tools:
-        // const result = await mcp__v0_server__iterate_component({
+        // const result = await mcp__v0_mcp_server__generate({
+        //   prompt: iteration.prompt,
         //   chatId,
-        //   changes: iteration.prompt
         // });
         
         // For now, use mock code

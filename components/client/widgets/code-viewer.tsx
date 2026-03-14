@@ -21,13 +21,15 @@ export function CodeViewer({
   code, 
   language = "typescript", 
   title,
-  showLineNumbers = true,
+  showLineNumbers: showLineNumbersProp,
   className 
 }: CodeViewerProps) {
   const [copied, setCopied] = React.useState(false)
   const [isFullscreen, setIsFullscreen] = React.useState(false)
   const [isClient, setIsClient] = React.useState(false)
   const codeRef = React.useRef<HTMLDivElement>(null)
+  const lines = code.split('\n')
+  const showLineNumbers = showLineNumbersProp ?? lines.length > 10
 
   React.useEffect(() => {
     setIsClient(true)
@@ -47,8 +49,6 @@ export function CodeViewer({
     setIsFullscreen(!isFullscreen)
   }
 
-  // Generate line numbers
-  const lines = code.split('\n')
   const maxLineNumberWidth = String(lines.length).length
 
   return (

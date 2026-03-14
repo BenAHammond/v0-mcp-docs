@@ -1,27 +1,32 @@
 "use client"
 
 import { useState } from "react"
-import { Search, Copy, Check, ChevronRight, ExternalLink, BookOpen } from "lucide-react"
+import { Search, Copy, Check, Sparkles, List, FileCode, Trash2, Gauge, Rocket, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { CodeViewer, CodeBlock, InlineCode, CommandBlock } from "@/components/client/widgets/code-viewer"
+import { CodeViewer, InlineCode } from "@/components/client/widgets/code-viewer"
 import Link from "next/link"
 
 interface Tool {
   name: string
   description: string
+  icon: React.ReactNode
+  color: string
   parameters: {
-    required: string[]
-    optional: string[]
-  }
+    name: string
+    type: string
+    required: boolean
+    description: string
+  }[]
   example: string
-  exampleUsageLink?: string
+  response: string
 }
 
 export default function ApiReferencePage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [copiedTool, setCopiedTool] = useState<string | null>(null)
+  const [expandedTool, setExpandedTool] = useState<string | null>("generate")
 
   const copyToClipboard = (text: string, toolName: string) => {
     navigator.clipboard.writeText(text)
@@ -29,520 +34,334 @@ export default function ApiReferencePage() {
     setTimeout(() => setCopiedTool(null), 2000)
   }
 
-  // SDK documentation links for each namespace
-  const sdkDocLinks: Record<string, string> = {
-    chats: "https://v0.dev/docs/api/chats",
-    projects: "https://v0.dev/docs/api/projects",
-    deployments: "https://v0.dev/docs/api/deployments",
-    user: "https://v0.dev/docs/api/user",
-    rate_limits: "https://v0.dev/docs/api/rate-limits",
-    hooks: "https://v0.dev/docs/api/webhooks",
-    integrations: "https://v0.dev/docs/api/integrations"
-  }
-
-  const tools: Record<string, Tool[]> = {
-    chats: [
-      {
-        name: "chats_create",
-        description: "Create a new chat to generate a component",
-        parameters: {
-          required: ["message"],
-          optional: []
-        },
-        example: `{
-  "tool": "chats_create",
-  "arguments": {
-    "params": {
-      "message": "Create a hero section with gradient background"
-    }
-  }
-}`,
-        exampleUsageLink: "/samples#contact-form"
-      },
-      {
-        name: "chats_find",
-        description: "List all existing chats",
-        parameters: {
-          required: [],
-          optional: ["limit", "offset"]
-        },
-        example: `{
-  "tool": "chats_find",
-  "arguments": {
-    "params": {}
-  }
-}`
-      },
-      {
-        name: "chats_send_message",
-        description: "Send a message to an existing chat to iterate on a component",
-        parameters: {
-          required: ["chatId", "message"],
-          optional: []
-        },
-        example: `{
-  "tool": "chats_send_message",
-  "arguments": {
-    "params": {
-      "chatId": "abc123",
-      "message": "Make the background darker"
-    }
-  }
-}`,
-        exampleUsageLink: "/samples#contact-form"
-      }
-    ],
-    projects: [
-      {
-        name: "projects_find",
-        description: "List all projects",
-        parameters: {
-          required: [],
-          optional: ["limit", "offset"]
-        },
-        example: `{
-  "tool": "projects_find",
-  "arguments": {
-    "params": {}
-  }
-}`
-      },
-      {
-        name: "projects_create",
-        description: "Create a new project",
-        parameters: {
-          required: ["name"],
-          optional: ["description"]
-        },
-        example: `{
-  "tool": "projects_create",
-  "arguments": {
-    "params": {
-      "name": "My UI Library"
-    }
-  }
-}`
-      }
-    ],
-    deployments: [
-      {
-        name: "deployments_find",
-        description: "List deployments for a project",
-        parameters: {
-          required: ["projectId", "chatId", "versionId"],
-          optional: []
-        },
-        example: `{
-  "tool": "deployments_find",
-  "arguments": {
-    "params": {
-      "projectId": "proj_123",
-      "chatId": "chat_456",
-      "versionId": "ver_789"
-    }
-  }
-}`
-      }
-    ],
-    user: [
-      {
-        name: "user_get",
-        description: "Get current user information",
-        parameters: {
-          required: [],
-          optional: []
-        },
-        example: `{
-  "tool": "user_get",
-  "arguments": {
-    "params": {}
-  }
-}`
-      },
-      {
-        name: "user_get_plan",
-        description: "Get current subscription plan details",
-        parameters: {
-          required: [],
-          optional: []
-        },
-        example: `{
-  "tool": "user_get_plan",
-  "arguments": {
-    "params": {}
-  }
-}`
-      }
-    ],
-    rate_limits: [
-      {
-        name: "rate_limits_find",
-        description: "Check current API rate limits and usage",
-        parameters: {
-          required: [],
-          optional: []
-        },
-        example: `{
-  "tool": "rate_limits_find",
-  "arguments": {
-    "params": {}
-  }
-}`
-      }
-    ]
-  }
-
-  const legacyAliases = [
+  const tools: Tool[] = [
     {
-      legacy: "generate_component",
-      modern: "chats_create",
-      description: "Legacy alias for component generation",
-      exampleLink: "/samples#contact-form"
+      name: "generate",
+      description: "Prompt → UI. Returns chatId, webUrl, files (path + content). Optional chatId to iterate.",
+      icon: <Sparkles className="h-5 w-5" />,
+      color: "from-violet-500 to-purple-600",
+      parameters: [
+        { name: "prompt", type: "string", required: true, description: "What to generate (e.g. \"A pricing table with 3 tiers\")" },
+        { name: "chatId", type: "string", required: false, description: "Continue an existing chat instead of starting new" },
+        { name: "projectId", type: "string", required: false, description: "Associate with a project" }
+      ],
+      example: `{
+  "prompt": "Create a modern pricing table with 3 tiers: Basic, Pro, and Enterprise. Include feature lists and CTA buttons."
+}`,
+      response: `{
+  "chatId": "chat_abc123",
+  "webUrl": "https://v0.dev/chat/chat_abc123",
+  "files": [
+    { "path": "pricing-table.tsx", "content": "..." }
+  ]
+}`
     },
     {
-      legacy: "iterate_component",
-      modern: "chats_send_message",
-      description: "Legacy alias for component iteration",
-      exampleLink: "/samples#saas-landing"
+      name: "list_chats",
+      description: "List chats (id, name, updatedAt). Pagination: limit, offset.",
+      icon: <List className="h-5 w-5" />,
+      color: "from-blue-500 to-cyan-600",
+      parameters: [
+        { name: "limit", type: "number", required: false, description: "Max results to return (default 20)" },
+        { name: "offset", type: "number", required: false, description: "Pagination offset" }
+      ],
+      example: `{}`,
+      response: `{
+  "chats": [
+    { "id": "chat_abc123", "name": "Pricing Table", "updatedAt": "2024-01-15T..." },
+    { "id": "chat_def456", "name": "Login Form", "updatedAt": "2024-01-14T..." }
+  ],
+  "total": 2
+}`
+    },
+    {
+      name: "get_chat",
+      description: "Chat by id. Returns name, webUrl, files (path + content).",
+      icon: <FileCode className="h-5 w-5" />,
+      color: "from-emerald-500 to-teal-600",
+      parameters: [
+        { name: "chatId", type: "string", required: true, description: "The chat ID to retrieve" }
+      ],
+      example: `{
+  "chatId": "chat_abc123"
+}`,
+      response: `{
+  "id": "chat_abc123",
+  "name": "Pricing Table",
+  "webUrl": "https://v0.dev/chat/chat_abc123",
+  "files": [
+    { "path": "pricing-table.tsx", "content": "export function PricingTable() { ... }" },
+    { "path": "components/tier-card.tsx", "content": "..." }
+  ]
+}`
+    },
+    {
+      name: "delete_chat",
+      description: "Delete chat by id. Irreversible.",
+      icon: <Trash2 className="h-5 w-5" />,
+      color: "from-red-500 to-rose-600",
+      parameters: [
+        { name: "chatId", type: "string", required: true, description: "The chat ID to delete" }
+      ],
+      example: `{
+  "chatId": "chat_abc123"
+}`,
+      response: `{
+  "deleted": true,
+  "chatId": "chat_abc123"
+}`
+    },
+    {
+      name: "rate_limits",
+      description: "Usage and quota (limit, remaining, resetAt).",
+      icon: <Gauge className="h-5 w-5" />,
+      color: "from-amber-500 to-orange-600",
+      parameters: [],
+      example: `{}`,
+      response: `{
+  "rateLimits": [
+    { "resource": "generations", "limit": 100, "remaining": 87, "resetAt": "2024-01-16T00:00:00Z" }
+  ]
+}`
+    },
+    {
+      name: "deploy",
+      description: "Deploy chat (optional versionId). Returns deploy id, url, status.",
+      icon: <Rocket className="h-5 w-5" />,
+      color: "from-pink-500 to-rose-600",
+      parameters: [
+        { name: "chatId", type: "string", required: true, description: "The chat to deploy" },
+        { name: "versionId", type: "string", required: false, description: "Specific version (defaults to latest)" }
+      ],
+      example: `{
+  "chatId": "chat_abc123"
+}`,
+      response: `{
+  "id": "deploy_xyz789",
+  "url": "https://v0-pricing-table.vercel.app",
+  "status": "ready"
+}`
     }
   ]
 
-  const filteredTools = Object.entries(tools).reduce<Record<string, Tool[]>>((acc, [namespace, toolList]) => {
-    const filtered = toolList.filter(tool => 
-      tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      tool.description.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    if (filtered.length > 0) {
-      acc[namespace] = filtered
-    }
-    return acc
-  }, {})
+  const filteredTools = tools.filter(tool =>
+    tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    tool.description.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50 py-12 sm:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            API Reference
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl">
-            Complete reference for all auto-discovered v0 SDK tools available through the MCP server
-          </p>
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-violet-100/50 via-blue-50/30 to-emerald-50/50" />
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+          <div className="text-center">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent mb-6">
+              API Reference
+            </h1>
+            <p className="text-lg text-gray-600 max-w-xl mx-auto mb-8">
+              Tools, parameters, and response shapes.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {tools.map((tool) => (
+                <button
+                  key={tool.name}
+                  onClick={() => {
+                    setExpandedTool(tool.name)
+                    document.getElementById(tool.name)?.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-white bg-gradient-to-r ${tool.color} hover:shadow-lg hover:scale-105 transition-all`}
+                >
+                  {tool.icon}
+                  {tool.name}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Search Bar */}
-      <section className="py-6 sm:py-8 border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative max-w-xl">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+      {/* Search */}
+      <section className="sticky top-0 z-10 bg-white/80 backdrop-blur-lg border-b">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="relative max-w-md mx-auto">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
             <Input
               type="text"
               placeholder="Search tools..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 pr-4 py-3 sm:py-2 w-full text-base sm:text-sm min-h-[44px] sm:min-h-[40px]"
+              className="pl-12 pr-4 py-3 w-full rounded-full border-gray-200 focus:ring-2 focus:ring-violet-500 focus:border-transparent"
             />
           </div>
         </div>
       </section>
 
-      {/* Key Samples Section */}
-      <section className="py-8 sm:py-12 border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Quick Start Samples</h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <Link 
-              href="/samples#contact-form"
-              className="block p-4 border rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all min-h-[44px] flex flex-col justify-center"
-            >
-              <h3 className="font-semibold text-gray-900 mb-1">Generate a Component</h3>
-              <p className="text-sm text-gray-600 mb-2">Learn how to use chats_create to generate your first component</p>
-              <span className="inline-flex items-center gap-1 text-sm text-blue-600">
-                View example <ChevronRight className="h-3 w-3" />
-              </span>
-            </Link>
-            <Link 
-              href="/samples#saas-landing"
-              className="block p-4 border rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all min-h-[44px] flex flex-col justify-center"
-            >
-              <h3 className="font-semibold text-gray-900 mb-1">Iterate on Components</h3>
-              <p className="text-sm text-gray-600 mb-2">See how chats_send_message refines existing components</p>
-              <span className="inline-flex items-center gap-1 text-sm text-blue-600">
-                View example <ChevronRight className="h-3 w-3" />
-              </span>
-            </Link>
-            <Link 
-              href="/samples#analytics-dashboard"
-              className="block p-4 border rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all min-h-[44px] flex flex-col justify-center"
-            >
-              <h3 className="font-semibold text-gray-900 mb-1">Complex UI Patterns</h3>
-              <p className="text-sm text-gray-600 mb-2">Explore dashboard and data visualization examples</p>
-              <span className="inline-flex items-center gap-1 text-sm text-blue-600">
-                View example <ChevronRight className="h-3 w-3" />
-              </span>
-            </Link>
-          </div>
-          <div className="mt-4 sm:mt-6 p-4 bg-gray-50 border border-gray-200 rounded-lg">
-            <p className="text-sm text-gray-700">
-              <strong>Tip:</strong> Check out our <Link href="/samples" className="text-blue-600 hover:text-blue-700">examples page</Link> for comprehensive demonstrations of each tool in action, including prompts, generated code, and iteration workflows.
-            </p>
+      {/* Tools */}
+      <section className="py-12 sm:py-16">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="space-y-8">
+            {filteredTools.map((tool) => (
+              <Card
+                key={tool.name}
+                id={tool.name}
+                className={`overflow-hidden border-0 shadow-lg transition-all ${expandedTool === tool.name ? 'ring-2 ring-violet-500 ring-offset-2' : ''}`}
+              >
+                <CardHeader
+                  className={`bg-gradient-to-r ${tool.color} text-white cursor-pointer`}
+                  onClick={() => setExpandedTool(expandedTool === tool.name ? null : tool.name)}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-white/20 rounded-xl">
+                      {tool.icon}
+                    </div>
+                    <div className="flex-1">
+                      <CardTitle className="text-xl sm:text-2xl font-mono">{tool.name}</CardTitle>
+                      <CardDescription className="text-white/80 mt-1">{tool.description}</CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+
+                {expandedTool === tool.name && (
+                  <CardContent className="p-6 sm:p-8 space-y-8 bg-white">
+                    {/* Parameters */}
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Parameters</h3>
+                      {tool.parameters.length === 0 ? (
+                        <p className="text-gray-500 italic">No parameters required</p>
+                      ) : (
+                        <div className="space-y-3">
+                          {tool.parameters.map((param) => (
+                            <div key={param.name} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <code className="text-sm font-mono font-semibold text-gray-900">{param.name}</code>
+                                  <span className="text-xs px-2 py-0.5 rounded-full bg-gray-200 text-gray-600">{param.type}</span>
+                                  {param.required ? (
+                                    <span className="text-xs px-2 py-0.5 rounded-full bg-red-100 text-red-700">required</span>
+                                  ) : (
+                                    <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">optional</span>
+                                  )}
+                                </div>
+                                <p className="text-sm text-gray-600">{param.description}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Example */}
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      <div>
+                        <div className="flex items-center justify-between mb-3">
+                          <h3 className="text-lg font-semibold text-gray-900">Request</h3>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => copyToClipboard(tool.example, tool.name)}
+                            className="h-8 px-3"
+                          >
+                            {copiedTool === tool.name ? (
+                              <><Check className="h-4 w-4 text-green-600 mr-1" /> Copied</>
+                            ) : (
+                              <><Copy className="h-4 w-4 mr-1" /> Copy</>
+                            )}
+                          </Button>
+                        </div>
+                        <div className="bg-gray-900 rounded-xl p-4 overflow-x-auto">
+                          <pre className="text-sm text-gray-300">
+                            <code>{tool.example}</code>
+                          </pre>
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">Response</h3>
+                        <div className="bg-gray-900 rounded-xl p-4 overflow-x-auto">
+                          <pre className="text-sm text-emerald-400">
+                            <code>{tool.response}</code>
+                          </pre>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                )}
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Tools Directory */}
-      <section className="py-8 sm:py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-8 sm:mb-12">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Auto-Discovered Tools</h2>
-            <p className="text-gray-600">
-              The v0 MCP Server automatically discovers and exposes 39 tools from the v0 SDK. 
-              These tools are organized by namespace and provide full access to v0's capabilities.
-            </p>
+      {/* Quick Start */}
+      <section className="py-12 sm:py-16 bg-gray-50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8">Quick Start</h2>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card className="border-0 shadow-lg">
+              <CardHeader>
+                <CardTitle>1. Get Your API Key</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <ol className="list-decimal list-inside space-y-2 text-gray-600">
+                  <li>Go to <InlineCode>v0.dev/chat/settings/keys</InlineCode></li>
+                  <li>Click "Generate New Key"</li>
+                  <li>Copy your key</li>
+                </ol>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg">
+              <CardHeader>
+                <CardTitle>2. Configure Claude</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CodeViewer 
+                  language="bash"
+                  showLineNumbers={false}
+                  code={`# Set your API key
+export V0_API_KEY="your-key"
+
+# Run the MCP server
+npx v0-mcp-server`}
+                />
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Tools Grid */}
-          <div className="space-y-8 sm:space-y-12">
-            {Object.entries(filteredTools).map(([namespace, toolList]) => (
-              <div key={namespace}>
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-2">
-                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 capitalize">
-                    {namespace.replace('_', ' ')} Namespace
-                  </h3>
-                  {sdkDocLinks[namespace] && (
-                    <a
-                      href={sdkDocLinks[namespace]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700 transition-colors min-h-[44px] sm:min-h-auto"
-                    >
-                      View SDK Docs
-                      <ExternalLink className="h-3 w-3" />
-                    </a>
-                  )}
+          <div className="mt-8 text-center">
+            <Link
+              href="/getting-started"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-colors"
+            >
+              Full Setup Guide
+              <ExternalLink className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Workflow */}
+      <section className="py-12 sm:py-16">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-12">Typical Workflow</h2>
+          
+          <div className="grid sm:grid-cols-4 gap-6">
+            {[
+              { step: "1", title: "Generate", desc: "Create a component", tool: "generate", color: "violet" },
+              { step: "2", title: "Iterate", desc: "Refine with chatId", tool: "generate", color: "blue" },
+              { step: "3", title: "Retrieve", desc: "Get the files", tool: "get_chat", color: "emerald" },
+              { step: "4", title: "Deploy", desc: "Go live", tool: "deploy", color: "pink" }
+            ].map((item, i) => (
+              <div key={i} className="text-center">
+                <div className={`w-12 h-12 mx-auto mb-4 rounded-full bg-${item.color}-100 flex items-center justify-center text-${item.color}-600 font-bold text-xl`}>
+                  {item.step}
                 </div>
-                <div className="grid gap-4 sm:gap-6">
-                  {toolList.map((tool) => (
-                    <Card key={tool.name} className="overflow-hidden">
-                      <CardHeader className="pb-3 sm:pb-6">
-                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
-                          <div className="flex-1">
-                            <CardTitle className="text-base sm:text-lg font-mono break-all">{tool.name}</CardTitle>
-                            <CardDescription className="mt-2 text-sm">{tool.description}</CardDescription>
-                          </div>
-                          {tool.exampleUsageLink && (
-                            <Link 
-                              href={tool.exampleUsageLink}
-                              className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700 transition-colors min-h-[44px] sm:min-h-auto justify-center sm:justify-start"
-                            >
-                              <BookOpen className="h-4 w-4" />
-                              Example
-                            </Link>
-                          )}
-                        </div>
-                      </CardHeader>
-                      <CardContent className="space-y-4 pt-0">
-                        <div>
-                          <h4 className="text-sm font-semibold text-gray-700 mb-2">Parameters</h4>
-                          <div className="space-y-1 overflow-x-auto">
-                            {tool.parameters.required.length > 0 && (
-                              <div className="text-sm">
-                                <span className="text-red-600 font-medium">Required:</span>{" "}
-                                <span className="font-mono text-gray-700 break-all">
-                                  {tool.parameters.required.join(", ")}
-                                </span>
-                              </div>
-                            )}
-                            {tool.parameters.optional.length > 0 && (
-                              <div className="text-sm">
-                                <span className="text-blue-600 font-medium">Optional:</span>{" "}
-                                <span className="font-mono text-gray-700 break-all">
-                                  {tool.parameters.optional.join(", ")}
-                                </span>
-                              </div>
-                            )}
-                            {tool.parameters.required.length === 0 && tool.parameters.optional.length === 0 && (
-                              <div className="text-sm text-gray-500">No parameters required</div>
-                            )}
-                          </div>
-                        </div>
-                        <div>
-                          <div className="flex items-center justify-between mb-2">
-                            <h4 className="text-sm font-semibold text-gray-700">Example</h4>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => copyToClipboard(tool.example, tool.name)}
-                              className="h-8 px-2 min-h-[44px] sm:min-h-[32px]"
-                            >
-                              {copiedTool === tool.name ? (
-                                <Check className="h-4 w-4 text-green-600" />
-                              ) : (
-                                <Copy className="h-4 w-4" />
-                              )}
-                            </Button>
-                          </div>
-                          <div className="bg-gray-900 rounded-lg p-3 sm:p-4 overflow-x-auto">
-                            <pre className="text-xs sm:text-sm text-gray-300 whitespace-pre-wrap sm:whitespace-pre">
-                              <code>{tool.example}</code>
-                            </pre>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
+                <h3 className="font-semibold text-gray-900">{item.title}</h3>
+                <p className="text-sm text-gray-600 mb-2">{item.desc}</p>
+                <code className="text-xs font-mono text-gray-500">{item.tool}</code>
               </div>
             ))}
-          </div>
-
-          {/* Legacy Aliases Section */}
-          <div className="mt-12 sm:mt-16">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Legacy Aliases</h2>
-            <p className="text-gray-600 mb-6 sm:mb-8">
-              For backward compatibility, the following legacy tool names are supported and automatically 
-              mapped to their modern equivalents:
-            </p>
-            <div className="grid gap-4">
-              {legacyAliases.map((alias) => (
-                <Card key={alias.legacy}>
-                  <CardContent className="py-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                      <div className="flex-1">
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2 sm:mb-0">
-                          <code className="text-xs sm:text-sm font-mono bg-gray-100 px-3 py-1 rounded break-all">
-                            {alias.legacy}
-                          </code>
-                          <ChevronRight className="h-4 w-4 text-gray-400 mx-auto sm:mx-0" />
-                          <code className="text-xs sm:text-sm font-mono bg-blue-100 text-blue-700 px-3 py-1 rounded break-all">
-                            {alias.modern}
-                          </code>
-                        </div>
-                        <span className="text-sm text-gray-600 block sm:ml-4">{alias.description}</span>
-                      </div>
-                      {alias.exampleLink && (
-                        <Link 
-                          href={alias.exampleLink}
-                          className="inline-flex items-center justify-center gap-1 text-sm text-blue-600 hover:text-blue-700 transition-colors min-h-[44px] sm:min-h-auto"
-                        >
-                          <BookOpen className="h-4 w-4" />
-                          Example
-                        </Link>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          {/* Authentication Section */}
-          <div className="mt-12 sm:mt-16">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Authentication</h2>
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base sm:text-lg">API Key Configuration</CardTitle>
-                <CardDescription className="text-sm">
-                  All requests require a valid v0 API key for authentication
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <h4 className="text-sm font-semibold text-gray-700 mb-2">Getting Your API Key</h4>
-                  <ol className="list-decimal list-inside space-y-2 text-sm text-gray-600">
-                    <li>Visit <InlineCode>v0.dev/chat/settings/keys</InlineCode></li>
-                    <li>Click "Generate New Key"</li>
-                    <li>Copy your key (format: <InlineCode>v1:xxxxx:xxxxx</InlineCode>)</li>
-                  </ol>
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-gray-700 mb-2">Using Your API Key</h4>
-                  <CodeViewer 
-                    language="bash"
-                    showLineNumbers={false}
-                    code={`# Set as environment variable
-export V0_API_KEY="v1:your:key"
-
-# Or pass to npx command
-npx v0-mcp-server --api-key "v1:your:key"`}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Official SDK Documentation Section */}
-          <div className="mt-12 sm:mt-16">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Official v0 SDK Documentation</h2>
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base sm:text-lg">Learn More About v0's Capabilities</CardTitle>
-                <CardDescription className="text-sm">
-                  The v0 MCP Server exposes a subset of the full v0 SDK capabilities. For advanced use cases and direct SDK integration, explore the official documentation.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <a
-                    href="https://v0.dev/docs"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between p-4 border rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all min-h-[44px]"
-                  >
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-gray-900 text-sm sm:text-base">v0 Documentation</h4>
-                      <p className="text-xs sm:text-sm text-gray-600 mt-1">Complete guide to v0's features and capabilities</p>
-                    </div>
-                    <ExternalLink className="h-5 w-5 text-gray-400 ml-2 flex-shrink-0" />
-                  </a>
-                  <a
-                    href="https://v0.dev/docs/api"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between p-4 border rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all min-h-[44px]"
-                  >
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-gray-900 text-sm sm:text-base">API Reference</h4>
-                      <p className="text-xs sm:text-sm text-gray-600 mt-1">Detailed SDK API documentation</p>
-                    </div>
-                    <ExternalLink className="h-5 w-5 text-gray-400 ml-2 flex-shrink-0" />
-                  </a>
-                  <a
-                    href="https://sdk.v0.dev"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between p-4 border rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all min-h-[44px]"
-                  >
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-gray-900 text-sm sm:text-base">v0 SDK</h4>
-                      <p className="text-xs sm:text-sm text-gray-600 mt-1">Official SDK for direct integration</p>
-                    </div>
-                    <ExternalLink className="h-5 w-5 text-gray-400 ml-2 flex-shrink-0" />
-                  </a>
-                  <a
-                    href="https://v0.dev/docs/guides"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between p-4 border rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all min-h-[44px]"
-                  >
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-gray-900 text-sm sm:text-base">Guides & Tutorials</h4>
-                      <p className="text-xs sm:text-sm text-gray-600 mt-1">Learn best practices and advanced techniques</p>
-                    </div>
-                    <ExternalLink className="h-5 w-5 text-gray-400 ml-2 flex-shrink-0" />
-                  </a>
-                </div>
-                <div className="mt-4 sm:mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                  <p className="text-xs sm:text-sm text-blue-900">
-                    <strong>Note:</strong> When using the v0 MCP Server through Claude, you don't need to interact with the SDK directly. 
-                    The MCP server handles all SDK calls automatically. These links are provided for users who want to explore 
-                    additional capabilities or integrate v0 directly into their applications.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </section>
