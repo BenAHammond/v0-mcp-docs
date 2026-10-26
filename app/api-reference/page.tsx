@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Search, Copy, Check, Sparkles, List, FileCode, Trash2, Gauge, Rocket, ExternalLink } from "lucide-react"
+import { Search, Copy, Check, Sparkles, Boxes, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -57,89 +57,42 @@ export default function ApiReferencePage() {
 }`
     },
     {
-      name: "list_chats",
-      description: "List chats (id, name, updatedAt). Pagination: limit, offset.",
-      icon: <List className="h-5 w-5" />,
+      name: "request",
+      description: "Generic {resource, action, params} dispatcher. Deploy, list/get/delete chats, versions, projects, env vars, reports — all reachable here.",
+      icon: <Boxes className="h-5 w-5" />,
       color: "from-blue-500 to-cyan-600",
       parameters: [
-        { name: "limit", type: "number", required: false, description: "Max results to return (default 20)" },
-        { name: "offset", type: "number", required: false, description: "Pagination offset" }
-      ],
-      example: `{}`,
-      response: `{
-  "chats": [
-    { "id": "chat_abc123", "name": "Pricing Table", "updatedAt": "2024-01-15T..." },
-    { "id": "chat_def456", "name": "Login Form", "updatedAt": "2024-01-14T..." }
-  ],
-  "total": 2
-}`
-    },
-    {
-      name: "get_chat",
-      description: "Chat by id. Returns name, webUrl, files (path + content).",
-      icon: <FileCode className="h-5 w-5" />,
-      color: "from-emerald-500 to-teal-600",
-      parameters: [
-        { name: "chatId", type: "string", required: true, description: "The chat ID to retrieve" }
+        { name: "resource", type: "string", required: true, description: "The resource: chats, deployments, rate_limits, projects, env_vars, reports" },
+        { name: "action", type: "string", required: true, description: "The operation on that resource (see search for the full list)" },
+        { name: "params", type: "object", required: false, description: "Operation-specific parameters" }
       ],
       example: `{
-  "chatId": "chat_abc123"
-}`,
-      response: `{
-  "id": "chat_abc123",
-  "name": "Pricing Table",
-  "webUrl": "https://v0.dev/chat/chat_abc123",
-  "files": [
-    { "path": "pricing-table.tsx", "content": "export function PricingTable() { ... }" },
-    { "path": "components/tier-card.tsx", "content": "..." }
-  ]
-}`
-    },
-    {
-      name: "delete_chat",
-      description: "Delete chat by id. Irreversible.",
-      icon: <Trash2 className="h-5 w-5" />,
-      color: "from-red-500 to-rose-600",
-      parameters: [
-        { name: "chatId", type: "string", required: true, description: "The chat ID to delete" }
-      ],
-      example: `{
-  "chatId": "chat_abc123"
-}`,
-      response: `{
-  "deleted": true,
-  "chatId": "chat_abc123"
-}`
-    },
-    {
-      name: "rate_limits",
-      description: "Usage and quota (limit, remaining, resetAt).",
-      icon: <Gauge className="h-5 w-5" />,
-      color: "from-amber-500 to-orange-600",
-      parameters: [],
-      example: `{}`,
-      response: `{
-  "rateLimits": [
-    { "resource": "generations", "limit": 100, "remaining": 87, "resetAt": "2024-01-16T00:00:00Z" }
-  ]
-}`
-    },
-    {
-      name: "deploy",
-      description: "Deploy chat (optional versionId). Returns deploy id, url, status.",
-      icon: <Rocket className="h-5 w-5" />,
-      color: "from-pink-500 to-rose-600",
-      parameters: [
-        { name: "chatId", type: "string", required: true, description: "The chat to deploy" },
-        { name: "versionId", type: "string", required: false, description: "Specific version (defaults to latest)" }
-      ],
-      example: `{
-  "chatId": "chat_abc123"
+  "resource": "deployments",
+  "action": "create",
+  "params": { "chatId": "chat_abc123" }
 }`,
       response: `{
   "id": "deploy_xyz789",
   "url": "https://v0-pricing-table.vercel.app",
   "status": "ready"
+}`
+    },
+    {
+      name: "search",
+      description: "On-demand manifest of every resource, action, and parameter. Ask it before invoking an unfamiliar request.",
+      icon: <Search className="h-5 w-5" />,
+      color: "from-emerald-500 to-teal-600",
+      parameters: [],
+      example: `{}`,
+      response: `{
+  "resources": {
+    "chats":        { "actions": ["list", "get", "delete", "versions", "version", "init", "resolve_task"] },
+    "deployments":  { "actions": ["create", "logs", "errors"] },
+    "rate_limits":  { "actions": ["get"] },
+    "projects":     { "actions": ["list", "create", "get", "update", "delete", "assign"] },
+    "env_vars":     { "actions": ["list", "create", "update", "delete", "get"] },
+    "reports":      { "actions": ["ai_usage", "usage", "user_activity"] }
+  }
 }`
     }
   ]
@@ -350,8 +303,8 @@ npx v0-mcp-server`}
             {[
               { step: "1", title: "Generate", desc: "Create a component", tool: "generate", color: "violet" },
               { step: "2", title: "Iterate", desc: "Refine with chatId", tool: "generate", color: "blue" },
-              { step: "3", title: "Retrieve", desc: "Get the files", tool: "get_chat", color: "emerald" },
-              { step: "4", title: "Deploy", desc: "Go live", tool: "deploy", color: "pink" }
+              { step: "3", title: "Retrieve", desc: "Get the files", tool: "request {chats.get}", color: "emerald" },
+              { step: "4", title: "Deploy", desc: "Go live", tool: "request {deployments.create}", color: "pink" }
             ].map((item, i) => (
               <div key={i} className="text-center">
                 <div className={`w-12 h-12 mx-auto mb-4 rounded-full bg-${item.color}-100 flex items-center justify-center text-${item.color}-600 font-bold text-xl`}>

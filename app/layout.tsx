@@ -12,7 +12,7 @@ const sourceSans = Source_Sans_3({
 
 export const metadata: Metadata = {
   title: "v0 MCP Server",
-  description: "MCP server for v0: generate, chats, deploy. Stdio. Any MCP client.",
+  description: "MCP server for v0: generate, request, search. Stdio. Any MCP client.",
 }
 
 export default function RootLayout({
