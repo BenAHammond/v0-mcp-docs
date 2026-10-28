@@ -12,19 +12,17 @@ const links = [
 const github = "https://github.com/BenAHammond/v0-mcp-server"
 
 /**
- * Brand mark: a "squared zero" frame around a V, with a black-and-white target
- * at the vertex.
+ * Brand mark: a few jagged zig-zag lines, deliberately irregular — the
+ * randomness is the point.
  */
 function BrandMark() {
   return (
-    <svg viewBox="0 0 24 24" className="h-6 w-6 text-brand" fill="none" aria-hidden="true">
-      <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
-      <g stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-        <line x1="12" y1="16.5" x2="7.5" y2="8" />
-        <line x1="12" y1="16.5" x2="16.5" y2="8" />
+    <svg viewBox="0 0 24 24" className="h-5 w-5 text-brand" fill="none" aria-hidden="true">
+      <g stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="miter">
+        <polyline points="2.5,6.5 6,2.5 9,7 13,3.5 16.5,7.5 21.5,4.5" />
+        <polyline points="2.5,11 6.5,7.5 10,12 14,8 17.5,12.5 21.5,9.5" />
+        <polyline points="3.5,17 7.5,13 11.5,17.5 15,13.5 18.5,17 22,14.5" />
       </g>
-      <circle cx="12" cy="16.5" r="2.2" fill="#1d1610" />
-      <circle cx="12" cy="16.5" r="1.0" fill="#ffffff" />
     </svg>
   )
 }
@@ -45,13 +43,17 @@ export function Nav() {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
           <Link
             href="/"
-            className="group flex flex-col items-center gap-1.5 no-underline"
+            className="group flex items-center gap-2.5 no-underline"
             aria-label="v0 MCP Server — home"
           >
             <BrandMark />
-            <span className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-foreground">
-              MCP
+            <span className="font-mono text-sm font-semibold tracking-tight text-foreground">
+              v0<span className="text-muted-foreground">-mcp-server</span>
             </span>
+            <span
+              className="hidden h-[1.05em] w-[0.55em] animate-blink bg-primary sm:block"
+              aria-hidden="true"
+            />
           </Link>
 
           <div className="flex items-center gap-6">
