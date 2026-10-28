@@ -12,8 +12,8 @@ const links = [
 const github = "https://github.com/BenAHammond/v0-mcp-server"
 
 /**
- * Brand mark: a sharp V crossed by a bar, a black-and-white target at the vertex
- * and at each crossing, and a small sparkle floating above.
+ * Brand mark: a sharp V with a black-and-white target at the vertex and a small
+ * sparkle floating above.
  */
 function BrandMark() {
   return (
@@ -21,17 +21,10 @@ function BrandMark() {
       <g stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
         <line x1="12" y1="21.5" x2="4.5" y2="4.5" />
         <line x1="12" y1="21.5" x2="19.5" y2="4.5" />
-        <line x1="1.5" y1="11" x2="22.5" y2="11" />
       </g>
       <path d="M12 2.5 L12.9 4.3 L15 5.5 L12.9 6.7 L12 8.5 L11.1 6.7 L9 5.5 L11.1 4.3 Z" fill="currentColor" />
-      <g>
-        <circle cx="12" cy="21.5" r="2.5" fill="#1d1610" />
-        <circle cx="12" cy="21.5" r="1.2" fill="#ffffff" />
-        <circle cx="7.4" cy="11" r="2.5" fill="#1d1610" />
-        <circle cx="7.4" cy="11" r="1.2" fill="#ffffff" />
-        <circle cx="16.6" cy="11" r="2.5" fill="#1d1610" />
-        <circle cx="16.6" cy="11" r="1.2" fill="#ffffff" />
-      </g>
+      <circle cx="12" cy="21.5" r="2.5" fill="#1d1610" />
+      <circle cx="12" cy="21.5" r="1.2" fill="#ffffff" />
     </svg>
   )
 }
