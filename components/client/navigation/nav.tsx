@@ -12,19 +12,19 @@ const links = [
 const github = "https://github.com/BenAHammond/v0-mcp-server"
 
 /**
- * Brand mark: a sharp V with a black-and-white target at the vertex and a small
- * sparkle floating above.
+ * Brand mark: a "squared zero" frame around a V, with a black-and-white target
+ * at the vertex.
  */
 function BrandMark() {
   return (
-    <svg viewBox="0 0 24 24" className="h-5 w-5 text-brand" fill="none" aria-hidden="true">
+    <svg viewBox="0 0 24 24" className="h-6 w-6 text-brand" fill="none" aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
       <g stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-        <line x1="12" y1="21.5" x2="4.5" y2="4.5" />
-        <line x1="12" y1="21.5" x2="19.5" y2="4.5" />
+        <line x1="12" y1="16.5" x2="7.5" y2="8" />
+        <line x1="12" y1="16.5" x2="16.5" y2="8" />
       </g>
-      <path d="M12 2.5 L12.9 4.3 L15 5.5 L12.9 6.7 L12 8.5 L11.1 6.7 L9 5.5 L11.1 4.3 Z" fill="currentColor" />
-      <circle cx="12" cy="21.5" r="2.5" fill="#1d1610" />
-      <circle cx="12" cy="21.5" r="1.2" fill="#ffffff" />
+      <circle cx="12" cy="16.5" r="2.2" fill="#1d1610" />
+      <circle cx="12" cy="16.5" r="1.0" fill="#ffffff" />
     </svg>
   )
 }
@@ -45,17 +45,13 @@ export function Nav() {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
           <Link
             href="/"
-            className="group flex items-center gap-2.5 no-underline"
+            className="group flex flex-col items-center gap-1.5 no-underline"
             aria-label="v0 MCP Server — home"
           >
             <BrandMark />
-            <span className="font-mono text-sm font-semibold tracking-tight text-foreground">
-              v0<span className="text-muted-foreground">-mcp-server</span>
+            <span className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-foreground">
+              MCP
             </span>
-            <span
-              className="hidden h-[1.05em] w-[0.55em] animate-blink bg-primary sm:block"
-              aria-hidden="true"
-            />
           </Link>
 
           <div className="flex items-center gap-6">
