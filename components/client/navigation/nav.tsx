@@ -1,8 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useState } from "react"
-import { LeafIcon } from "@/packages/harvest/src"
+import { useState } from "react"
 
 const links = [
   { href: "/getting-started", label: "install" },
@@ -12,20 +11,27 @@ const links = [
 
 const github = "https://github.com/BenAHammond/v0-mcp-server"
 
-/** Reads the `data-season` stamped on `<html>` by the pre-paint script. */
-function SeasonBadge() {
-  const [season, setSeason] = useState("autumn")
-
-  useEffect(() => {
-    const s = document.documentElement.getAttribute("data-season")
-    if (s) setSeason(s)
-  }, [])
-
+/**
+ * Brand mark: three lines crossing at sharp angles, with a small black-and-white
+ * target pinned at each intersection (the triangle's three vertices).
+ */
+function BrandMark() {
   return (
-    <span className="hidden md:inline-flex items-center gap-2 font-mono text-xs lowercase text-muted-foreground">
-      <span className="h-1.5 w-1.5 rounded-full bg-brand" aria-hidden="true" />
-      {season}
-    </span>
+    <svg viewBox="0 0 24 24" className="h-5 w-5 text-brand" fill="none" aria-hidden="true">
+      <g stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+        <line x1="13.4" y1="3.6" x2="5.0" y2="18.2" />
+        <line x1="10.6" y1="3.6" x2="19.0" y2="18.2" />
+        <line x1="3.6" y1="15.8" x2="20.4" y2="15.8" />
+      </g>
+      <g>
+        <circle cx="12" cy="6.0" r="2.6" fill="#1d1610" />
+        <circle cx="12" cy="6.0" r="1.1" fill="#ffffff" />
+        <circle cx="6.4" cy="15.8" r="2.6" fill="#1d1610" />
+        <circle cx="6.4" cy="15.8" r="1.1" fill="#ffffff" />
+        <circle cx="17.6" cy="15.8" r="2.6" fill="#1d1610" />
+        <circle cx="17.6" cy="15.8" r="1.1" fill="#ffffff" />
+      </g>
+    </svg>
   )
 }
 
@@ -48,7 +54,7 @@ export function Nav() {
             className="group flex items-center gap-2.5 no-underline"
             aria-label="v0 MCP Server — home"
           >
-            <LeafIcon className="h-5 w-5 text-brand transition-transform group-hover:rotate-12" />
+            <BrandMark />
             <span className="font-mono text-sm font-semibold tracking-tight text-foreground">
               v0<span className="text-muted-foreground">-mcp-server</span>
             </span>
@@ -58,29 +64,28 @@ export function Nav() {
             />
           </Link>
 
-          <nav className="hidden items-center gap-6 sm:flex">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="group font-mono text-sm lowercase text-muted-foreground transition-colors hover:text-foreground"
+          <div className="flex items-center gap-6">
+            <nav className="hidden items-center gap-6 sm:flex">
+              {links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="group font-mono text-sm lowercase text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <span className="text-primary/60 transition-colors group-hover:text-primary">/</span>
+                  {link.label}
+                </Link>
+              ))}
+              <a
+                href={github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-sm lowercase text-muted-foreground transition-colors hover:text-foreground"
               >
-                <span className="text-primary/60 transition-colors group-hover:text-primary">/</span>
-                {link.label}
-              </Link>
-            ))}
-            <a
-              href={github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-mono text-sm lowercase text-muted-foreground transition-colors hover:text-foreground"
-            >
-              github <span aria-hidden="true">↗</span>
-            </a>
-          </nav>
+                github <span aria-hidden="true">↗</span>
+              </a>
+            </nav>
 
-          <div className="flex items-center gap-3">
-            <SeasonBadge />
             <button
               type="button"
               className="flex h-10 w-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground sm:hidden"
