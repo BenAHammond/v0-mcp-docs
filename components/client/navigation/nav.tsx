@@ -12,24 +12,25 @@ const links = [
 const github = "https://github.com/BenAHammond/v0-mcp-server"
 
 /**
- * Brand mark: three lines crossing at sharp angles, with a small black-and-white
- * target pinned at each intersection (the triangle's three vertices).
+ * Brand mark: three long lines crossing at sharp (60°) angles — an X plus a
+ * horizontal bar — with a small black-and-white target at each of the three
+ * intersections.
  */
 function BrandMark() {
   return (
     <svg viewBox="0 0 24 24" className="h-5 w-5 text-brand" fill="none" aria-hidden="true">
       <g stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-        <line x1="13.4" y1="3.6" x2="5.0" y2="18.2" />
-        <line x1="10.6" y1="3.6" x2="19.0" y2="18.2" />
-        <line x1="3.6" y1="15.8" x2="20.4" y2="15.8" />
+        <line x1="4.5" y1="-1" x2="19.5" y2="25" />
+        <line x1="19.5" y1="-1" x2="4.5" y2="25" />
+        <line x1="0.5" y1="16.5" x2="23.5" y2="16.5" />
       </g>
       <g>
-        <circle cx="12" cy="6.0" r="2.6" fill="#1d1610" />
-        <circle cx="12" cy="6.0" r="1.1" fill="#ffffff" />
-        <circle cx="6.4" cy="15.8" r="2.6" fill="#1d1610" />
-        <circle cx="6.4" cy="15.8" r="1.1" fill="#ffffff" />
-        <circle cx="17.6" cy="15.8" r="2.6" fill="#1d1610" />
-        <circle cx="17.6" cy="15.8" r="1.1" fill="#ffffff" />
+        <circle cx="12" cy="12" r="2.5" fill="#1d1610" />
+        <circle cx="12" cy="12" r="1.2" fill="#ffffff" />
+        <circle cx="9.4" cy="16.5" r="2.5" fill="#1d1610" />
+        <circle cx="9.4" cy="16.5" r="1.2" fill="#ffffff" />
+        <circle cx="14.6" cy="16.5" r="2.5" fill="#1d1610" />
+        <circle cx="14.6" cy="16.5" r="1.2" fill="#ffffff" />
       </g>
     </svg>
   )
