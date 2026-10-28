@@ -31,17 +31,17 @@ function CopyButton({ text }: { text: string }) {
     <button
       onClick={handleCopy}
       aria-label={copied ? "Copied" : "Copy to clipboard"}
-      className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+      className="flex items-center gap-1.5 font-mono text-xs text-[#9c8f78] transition-colors hover:text-[#e7dcc7] cursor-pointer"
     >
       {copied ? (
         <>
           <Check className="size-3.5" aria-hidden="true" />
-          <span>Copied</span>
+          <span>copied</span>
         </>
       ) : (
         <>
           <Copy className="size-3.5" aria-hidden="true" />
-          <span>Copy</span>
+          <span>copy</span>
         </>
       )}
     </button>
@@ -51,20 +51,17 @@ function CopyButton({ text }: { text: string }) {
 interface CodeBlockProps {
   label: string
   code: string
-  lang?: string
 }
 
-function CodeBlock({ label, code, lang = "json" }: CodeBlockProps) {
+function CodeBlock({ label, code }: CodeBlockProps) {
   return (
-    <figure className="flex flex-col gap-0 rounded-lg border border-border overflow-hidden text-sm">
-      <figcaption className="flex items-center justify-between px-4 py-2 bg-muted border-b border-border">
-        <span className="font-mono text-xs text-muted-foreground">{label}</span>
+    <figure className="flex flex-col overflow-hidden rounded-lg border border-[#33291e] bg-[#1f1811] text-sm">
+      <figcaption className="flex items-center justify-between border-b border-[#33291e] bg-[#2a2118] px-4 py-2">
+        <span className="font-mono text-xs lowercase text-[#9c8f78]">{label}</span>
         <CopyButton text={code} />
       </figcaption>
-      <pre className="bg-background overflow-x-auto p-4 leading-relaxed">
-        <code className={`language-${lang} font-mono text-xs text-foreground`}>
-          {code}
-        </code>
+      <pre className="overflow-x-auto p-4 leading-relaxed">
+        <code className="font-mono text-xs text-[#e7dcc7]">{code}</code>
       </pre>
     </figure>
   )
@@ -72,49 +69,50 @@ function CodeBlock({ label, code, lang = "json" }: CodeBlockProps) {
 
 export function Hero() {
   return (
-    <section className="border-b border-border pb-12">
-      <div className="mb-6">
-        <h1 className="text-3xl font-semibold tracking-tight text-foreground text-balance mb-3">
-          v0 MCP Server
+    <section className="pt-12 pb-14 sm:pt-16 sm:pb-16">
+      <div className="mb-8 max-w-2xl">
+        <p className="mb-5 font-mono text-xs uppercase tracking-[0.2em] text-brand">
+          // mcp server &middot; stdio &middot; 3 tools
+        </p>
+        <h1 className="font-serif text-4xl leading-[1.05] tracking-tight text-foreground text-balance sm:text-5xl lg:text-[3.4rem]">
+          Generate UI from the tools you already use.
         </h1>
-        <p className="text-base text-muted-foreground leading-relaxed max-w-xl">
-          Connect v0 to your editor. Generate UI, manage chats, deploy—over stdio.
+        <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          v0&apos;s model behind an MCP server. Prompt a component, iterate a chat,
+          deploy to production — over stdio, in any MCP client.
         </p>
       </div>
 
-      <div className="flex flex-col gap-4">
-        <CodeBlock
-          label="Cursor — ~/.cursor/mcp.json"
-          code={cursorConfig}
-          lang="json"
-        />
-        <CodeBlock
-          label="Claude Code"
-          code={claudeCommand}
-          lang="bash"
-        />
+      <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2">
+        <CodeBlock label="cursor · ~/.cursor/mcp.json" code={cursorConfig} />
+        <CodeBlock label="claude code" code={claudeCommand} />
       </div>
 
-      <footer className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
-        <p className="text-xs text-muted-foreground">
-          API key:{" "}
+      <footer className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
+        <p className="text-sm text-muted-foreground">
+          API key from{" "}
           <a
             href="https://v0.dev/chat/settings/keys"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity"
+            className="text-primary underline underline-offset-2 transition-opacity hover:opacity-80"
           >
             v0.dev/chat/settings/keys
           </a>
         </p>
-        <span className="text-muted-foreground text-xs hidden sm:inline" aria-hidden="true">·</span>
-        <nav aria-label="Quick links" className="flex items-center gap-3">
-          <Link href="/getting-started" className="text-xs text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">
-            Install
+        <span className="hidden text-muted-foreground/60 sm:inline" aria-hidden="true">·</span>
+        <nav aria-label="Quick links" className="flex items-center gap-5">
+          <Link
+            href="/getting-started"
+            className="font-mono text-sm text-primary underline-offset-4 hover:underline"
+          >
+            install →
           </Link>
-          <span className="text-muted-foreground text-xs" aria-hidden="true">·</span>
-          <Link href="/api-reference" className="text-xs text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">
-            API reference
+          <Link
+            href="/api-reference"
+            className="font-mono text-sm text-primary underline-offset-4 hover:underline"
+          >
+            api →
           </Link>
         </nav>
       </footer>

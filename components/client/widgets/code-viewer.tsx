@@ -54,19 +54,19 @@ export function CodeViewer({
   return (
     <div 
       className={cn(
-        "relative rounded-lg border bg-gray-900",
+        "relative rounded-lg border bg-[#1f1811]",
         isFullscreen && "fixed inset-4 z-50 m-0",
         className
       )}
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2 border-b border-gray-800">
+      <div className="flex items-center justify-between px-4 py-2 border-b border-[#33291e]">
         <div className="flex items-center gap-2">
           {title && (
-            <span className="text-sm font-medium text-gray-300">{title}</span>
+            <span className="text-sm font-medium text-[#e7dcc7]">{title}</span>
           )}
           {language && (
-            <span className="text-xs text-gray-500 bg-gray-800 px-2 py-1 rounded">
+            <span className="text-xs text-[#9c8f78] bg-[#2a2118] px-2 py-1 rounded">
               {language}
             </span>
           )}
@@ -76,7 +76,7 @@ export function CodeViewer({
             variant="ghost"
             size="sm"
             onClick={toggleFullscreen}
-            className="h-7 px-2 text-gray-400 hover:text-gray-200"
+            className="h-7 px-2 text-[#9c8f78] hover:text-[#f0e6d4]"
           >
             {isFullscreen ? (
               <Minimize2 className="h-4 w-4" />
@@ -88,7 +88,7 @@ export function CodeViewer({
             variant="ghost"
             size="sm"
             onClick={handleCopy}
-            className="h-7 px-2 text-gray-400 hover:text-gray-200"
+            className="h-7 px-2 text-[#9c8f78] hover:text-[#f0e6d4]"
           >
             {copied ? (
               <>
@@ -122,7 +122,7 @@ export function CodeViewer({
               <div key={index} className="flex">
                 {showLineNumbers && (
                   <span 
-                    className="select-none text-gray-500 mr-4"
+                    className="select-none text-[#9c8f78] mr-4"
                     style={{ 
                       minWidth: `${maxLineNumberWidth + 0.5}ch`,
                       textAlign: 'right' 
@@ -133,13 +133,13 @@ export function CodeViewer({
                 )}
                 {isClient ? (
                   <span 
-                    className="text-gray-300"
+                    className="text-[#e7dcc7]"
                     dangerouslySetInnerHTML={{ 
                       __html: highlightSyntax(line, language) 
                     }} 
                   />
                 ) : (
-                  <span className="text-gray-300">{line}</span>
+                  <span className="text-[#e7dcc7]">{line}</span>
                 )}
               </div>
             ))}
@@ -148,9 +148,9 @@ export function CodeViewer({
       </div>
 
       {/* Mobile scroll indicator */}
-      <div className="sm:hidden absolute bottom-2 right-2 text-xs text-gray-500 pointer-events-none">
+      <div className="sm:hidden absolute bottom-2 right-2 text-xs text-[#9c8f78] pointer-events-none">
         {code.split('\n').some(line => line.length > 80) && (
-          <span className="bg-gray-800 px-2 py-1 rounded">
+          <span className="bg-[#2a2118] px-2 py-1 rounded">
             ← Scroll →
           </span>
         )}
@@ -185,7 +185,7 @@ function highlightSyntax(code: string, language: string): string {
     // Comments
     highlighted = highlighted.replace(
       /(\/\/.*$|\/\*[\s\S]*?\*\/)/gm,
-      '<span class="text-gray-500">$1</span>'
+      '<span class="text-[#9c8f78]">$1</span>'
     )
     
     // Numbers
@@ -248,7 +248,7 @@ export function InlineCode({
 }) {
   const baseClasses = "font-mono text-xs sm:text-sm px-2 py-1 rounded break-all"
   const variantClasses = {
-    default: "bg-gray-100 text-gray-800",
+    default: "bg-muted text-foreground",
     primary: "bg-blue-100 text-blue-700", 
     success: "bg-green-100 text-green-700",
     warning: "bg-orange-100 text-orange-700"
@@ -291,13 +291,13 @@ export function CodeBlock({
   }
 
   return (
-    <div className={cn("relative bg-gray-900 rounded-lg overflow-hidden", className)}>
+    <div className={cn("relative bg-[#1f1811] rounded-lg overflow-hidden", className)}>
       {copyable && (
         <Button
           variant="ghost"
           size="sm"
           onClick={handleCopy}
-          className="absolute top-2 right-2 z-10 h-8 w-8 p-0 text-gray-400 hover:text-gray-200 hover:bg-gray-800"
+          className="absolute top-2 right-2 z-10 h-8 w-8 p-0 text-[#9c8f78] hover:text-[#f0e6d4] hover:bg-[#2a2118]"
         >
           {copied ? (
             <Check className="h-4 w-4" />
@@ -308,7 +308,7 @@ export function CodeBlock({
       )}
       <div className="overflow-x-auto touch-pan-x -webkit-overflow-scrolling-touch">
         <pre className="p-3 sm:p-4 text-xs sm:text-sm leading-relaxed min-w-max">
-          <code className="text-gray-300">
+          <code className="text-[#e7dcc7]">
             {children}
           </code>
         </pre>
@@ -317,7 +317,7 @@ export function CodeBlock({
       {/* Mobile scroll hint for long code */}
       <div className="sm:hidden absolute bottom-2 right-2 pointer-events-none">
         {typeof children === 'string' && children.split('\n').some(line => line.length > 60) && (
-          <span className="bg-gray-800/80 text-gray-400 text-xs px-2 py-1 rounded backdrop-blur-sm">
+          <span className="bg-[#2a2118]/80 text-[#9c8f78] text-xs px-2 py-1 rounded backdrop-blur-sm">
             ← →
           </span>
         )}
@@ -351,12 +351,12 @@ export function CommandBlock({
   }
 
   return (
-    <div className={cn("relative bg-gray-900 rounded-lg overflow-hidden", className)}>
+    <div className={cn("relative bg-[#1f1811] rounded-lg overflow-hidden", className)}>
       <Button
         variant="ghost"
         size="sm"
         onClick={handleCopy}
-        className="absolute top-2 right-2 z-10 h-8 w-8 p-0 text-gray-400 hover:text-gray-200 hover:bg-gray-800"
+        className="absolute top-2 right-2 z-10 h-8 w-8 p-0 text-[#9c8f78] hover:text-[#f0e6d4] hover:bg-[#2a2118]"
       >
         {copied ? (
           <Check className="h-4 w-4" />
@@ -371,7 +371,7 @@ export function CommandBlock({
               <span className="text-green-400 select-none mr-2 flex-shrink-0">
                 {prompt}
               </span>
-              <code className="text-gray-300 min-w-max">
+              <code className="text-[#e7dcc7] min-w-max">
                 {command}
               </code>
             </div>

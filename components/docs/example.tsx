@@ -65,17 +65,17 @@ function CopyButton({ text }: { text: string }) {
     <button
       onClick={handleCopy}
       aria-label={copied ? "Copied" : "Copy to clipboard"}
-      className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+      className="flex items-center gap-1.5 font-mono text-xs text-[#9c8f78] transition-colors hover:text-[#e7dcc7] cursor-pointer"
     >
       {copied ? (
         <>
           <Check className="size-3.5" aria-hidden="true" />
-          <span>Copied</span>
+          <span>copied</span>
         </>
       ) : (
         <>
           <Copy className="size-3.5" aria-hidden="true" />
-          <span>Copy</span>
+          <span>copy</span>
         </>
       )}
     </button>
@@ -85,20 +85,17 @@ function CopyButton({ text }: { text: string }) {
 interface PanelProps {
   label: string
   code: string
-  lang: string
 }
 
-function Panel({ label, code, lang }: PanelProps) {
+function Panel({ label, code }: PanelProps) {
   return (
-    <figure className="flex flex-col flex-1 min-w-0 rounded-lg border border-border overflow-hidden text-sm">
-      <figcaption className="flex items-center justify-between px-4 py-2 bg-muted border-b border-border shrink-0">
-        <span className="font-mono text-xs text-muted-foreground">{label}</span>
+    <figure className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-lg border border-[#33291e] bg-[#1f1811] text-sm">
+      <figcaption className="flex shrink-0 items-center justify-between border-b border-[#33291e] bg-[#2a2118] px-4 py-2">
+        <span className="font-mono text-xs lowercase text-[#9c8f78]">{label}</span>
         <CopyButton text={code} />
       </figcaption>
-      <pre className="bg-background overflow-x-auto overflow-y-auto p-4 leading-relaxed flex-1 max-h-80">
-        <code className={`language-${lang} font-mono text-xs text-foreground whitespace-pre`}>
-          {code}
-        </code>
+      <pre className="flex-1 overflow-x-auto overflow-y-auto p-4 leading-relaxed max-h-80">
+        <code className="whitespace-pre font-mono text-xs text-[#e7dcc7]">{code}</code>
       </pre>
     </figure>
   )
@@ -106,20 +103,24 @@ function Panel({ label, code, lang }: PanelProps) {
 
 export function Example() {
   return (
-    <section id="api-reference" aria-labelledby="example-heading" className="py-10 border-b border-border">
-      <h2 id="example-heading" className="text-xl font-semibold tracking-tight text-foreground mb-2">
-        Example
-      </h2>
-      <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-        Call <code className="font-mono bg-muted text-foreground text-xs px-1.5 py-0.5 rounded border border-border">generate</code> with
-        a prompt. The response includes <code className="font-mono bg-muted text-foreground text-xs px-1 py-0.5 rounded border border-border">chatId</code>,{" "}
-        <code className="font-mono bg-muted text-foreground text-xs px-1 py-0.5 rounded border border-border">webUrl</code>, and{" "}
-        <code className="font-mono bg-muted text-foreground text-xs px-1 py-0.5 rounded border border-border">files</code> (path + content).
+    <section id="api-reference" aria-labelledby="example-heading" className="py-12 sm:py-16">
+      <div className="mb-3 flex items-baseline gap-3">
+        <span className="font-mono text-xs text-brand">02</span>
+        <h2 id="example-heading" className="font-serif text-2xl tracking-tight text-foreground sm:text-3xl">
+          Example
+        </h2>
+      </div>
+      <p className="mb-6 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+        Call <code className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-xs text-foreground">generate</code>{" "}
+        with a prompt. The response includes{" "}
+        <code className="rounded border border-border bg-muted px-1 py-0.5 font-mono text-xs text-foreground">chatId</code>,{" "}
+        <code className="rounded border border-border bg-muted px-1 py-0.5 font-mono text-xs text-foreground">webUrl</code>, and{" "}
+        <code className="rounded border border-border bg-muted px-1 py-0.5 font-mono text-xs text-foreground">files</code> (path + content).
       </p>
 
-      <div className="flex flex-col lg:flex-row gap-4">
-        <Panel label="Request" code={requestJson} lang="json" />
-        <Panel label="Response" code={responseSnippet} lang="tsx" />
+      <div className="flex flex-col gap-4 lg:flex-row">
+        <Panel label="request" code={requestJson} />
+        <Panel label="response" code={responseSnippet} />
       </div>
     </section>
   )

@@ -53,9 +53,9 @@ export function ExampleWrapper({
           </Button>
         </div>
         
-        <div className="mt-3 p-3 bg-gray-50 rounded-md">
+        <div className="mt-3 p-3 bg-muted rounded-md">
           <div className="flex items-start justify-between gap-2">
-            <p className="text-sm font-mono text-gray-700 flex-1">
+            <p className="text-sm font-mono text-foreground flex-1">
               "{prompt}"
             </p>
             <Button
@@ -76,15 +76,15 @@ export function ExampleWrapper({
       
       <CardContent className="p-6 pt-3">
         {showCode && code ? (
-          <div className="relative rounded-lg border bg-zinc-950 p-4">
+          <div className="relative rounded-lg border border-[#33291e] bg-[#1f1811] p-4">
             <pre className="overflow-x-auto">
-              <code className="text-xs text-zinc-50">
+              <code className="text-xs text-[#e7dcc7]">
                 {code}
               </code>
             </pre>
           </div>
         ) : (
-          <div className="border rounded-lg p-4 bg-white">
+          <div className="border border-border rounded-lg p-4 bg-card">
             {children}
           </div>
         )}
