@@ -1,0 +1,310 @@
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-brand: hsl(var(--brand));
+  --color-brand-foreground: hsl(var(--brand-foreground));
+  /* Code-block syntax tones (Fall "Harvest Amber" theme). */
+  --color-command: #5e614a; /* mossy camouflage */
+  --color-package: #3d2b1f; /* deep warm brown */
+  --color-flag: #a6734e;    /* amber leather */
+}
+
+/* Harvest Amber palette — light warm-gray background with muted autumn accents. */
+:root {
+  --background: 37 39% 94%;        /* #F5F0E8 */
+  --foreground: 24 33% 18%;        /* #3D2B1F */
+  --card: 40 40% 97%;              /* warm near-white */
+  --card-foreground: 24 33% 18%;
+  --popover: 40 40% 97%;
+  --popover-foreground: 24 33% 18%;
+  --primary: 17 39% 39%;           /* #8C533D burnt sienna (accent / CTA) */
+  --primary-foreground: 40 40% 97%;
+  --secondary: 37 30% 88%;         /* light warm surface */
+  --secondary-foreground: 24 33% 18%;
+  --muted: 40 30% 91%;             /* light warm muted */
+  --muted-foreground: 43 14% 39%;  /* #736B56 milled flax */
+  --accent: 28 35% 86%;            /* light amber surface (hover) */
+  --accent-foreground: 24 33% 18%;
+  --destructive: 0 60% 45%;
+  --destructive-foreground: 40 40% 97%;
+  --border: 40 20% 78%;            /* warm light border */
+  --input: 40 20% 78%;
+  --ring: 17 39% 39%;
+  --brand: 17 39% 39%;
+  --brand-foreground: 40 40% 97%;
+  --radius: 0.5rem;
+}
+
+/* Seasonal palettes — the page chrome shifts with the season; autumn (above) is
+   the default. `seasonal-effects.tsx` sets `data-season` on <html> so these
+   override the same HSL vars. The code-block syntax tones (--color-command /
+   --color-package / --color-flag) are a deliberate fixed "Harvest Amber" code
+   theme and intentionally stay constant across seasons. */
+:root[data-season="winter"] {
+  --background: 210 30% 96%; /* cool pale blue-gray */
+  --foreground: 218 25% 20%;
+  --card: 210 28% 98%;
+  --card-foreground: 218 25% 20%;
+  --popover: 210 28% 98%;
+  --popover-foreground: 218 25% 20%;
+  --primary: 210 35% 40%; /* slate blue */
+  --primary-foreground: 210 30% 98%;
+  --secondary: 210 22% 91%;
+  --secondary-foreground: 218 25% 20%;
+  --muted: 210 25% 92%;
+  --muted-foreground: 214 16% 45%;
+  --accent: 210 25% 88%;
+  --accent-foreground: 218 25% 20%;
+  --destructive: 0 60% 45%;
+  --destructive-foreground: 210 30% 98%;
+  --border: 210 20% 82%;
+  --input: 210 20% 82%;
+  --ring: 210 35% 40%;
+  --brand: 210 40% 42%;
+  --brand-foreground: 210 30% 98%;
+}
+
+:root[data-season="spring"] {
+  --background: 140 30% 96%; /* pale mint */
+  --foreground: 150 25% 20%;
+  --card: 140 25% 98%;
+  --card-foreground: 150 25% 20%;
+  --popover: 140 25% 98%;
+  --popover-foreground: 150 25% 20%;
+  --primary: 145 30% 38%; /* fresh green */
+  --primary-foreground: 140 30% 98%;
+  --secondary: 140 22% 90%;
+  --secondary-foreground: 150 25% 20%;
+  --muted: 140 25% 92%;
+  --muted-foreground: 148 14% 42%;
+  --accent: 150 30% 88%;
+  --accent-foreground: 150 25% 20%;
+  --destructive: 0 60% 45%;
+  --destructive-foreground: 140 30% 98%;
+  --border: 140 18% 80%;
+  --input: 140 18% 80%;
+  --ring: 145 30% 38%;
+  --brand: 145 32% 40%;
+  --brand-foreground: 140 30% 98%;
+}
+
+:root[data-season="summer"] {
+  --background: 205 60% 93%; /* light sky blue */
+  --foreground: 215 30% 20%;
+  --card: 205 45% 98%;
+  --card-foreground: 215 30% 20%;
+  --popover: 205 45% 98%;
+  --popover-foreground: 215 30% 20%;
+  --primary: 210 60% 42%; /* azure */
+  --primary-foreground: 205 50% 98%;
+  --secondary: 205 35% 90%;
+  --secondary-foreground: 215 30% 20%;
+  --muted: 205 40% 92%;
+  --muted-foreground: 210 18% 42%;
+  --accent: 200 45% 88%;
+  --accent-foreground: 215 30% 20%;
+  --destructive: 0 60% 45%;
+  --destructive-foreground: 205 50% 98%;
+  --border: 205 30% 80%;
+  --input: 205 30% 80%;
+  --ring: 210 60% 42%;
+  --brand: 210 62% 45%;
+  --brand-foreground: 205 50% 98%;
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}
+
+/* ── Seasonal floating particles (parallax background) ────────────────── */
+/* Compositor-driven CSS animation so the particles keep falling smoothly while
+   the page scrolls — a requestAnimationFrame canvas can pause during scroll
+   in some browsers, which reads as the particles freezing mid-fall.
+
+   Lifecycle: each particle is created once on mount and loops forever. The
+   mover falls exactly `--fall-travel` (P) per iteration; the wrap renders the
+   visual twice, P apart, so the field is vertically periodic with period P —
+   which is what makes the parallax `-(rate × scrollY) mod P` wrap seamless.
+   Rotation over one loop is a whole multiple of the shape's rotational symmetry
+   (see `config.ts`), so the tumble also loops without a visible jump. */
+
+/* P = --fall-travel: one fall traversal. The mover falls by exactly P each loop.
+   The -0.5(P − 100vh) centering keeps the field centred on the viewport at
+   scrollY 0 (a particle spans from just above to just below the viewport). */
+@keyframes seasonal-fall {
+  from {
+    transform: translateY(calc((var(--fall-travel, 124vh) - 100vh) * -0.5));
+  }
+  to {
+    transform: translateY(calc(var(--fall-travel, 124vh) - (var(--fall-travel, 124vh) - 100vh) * 0.5));
+  }
+}
+
+/* Horizontal drift — carried on the `translate` property (an individual
+   transform), which composes innermost and never disturbs the fall `transform`. */
+@keyframes seasonal-drift {
+  from {
+    translate: calc(var(--drift-x, 0px) * -1);
+  }
+  to {
+    translate: var(--drift-x, 0px);
+  }
+}
+
+/* In-plane rock — carried on the `rotate` property so it stays independent of the
+   gyroscopic tumble below (and of the seamless tumble loop). */
+@keyframes seasonal-rock {
+  from {
+    rotate: calc(var(--rock-base, 0deg) - var(--rock-amp, 0deg));
+  }
+  to {
+    rotate: calc(var(--rock-base, 0deg) + var(--rock-amp, 0deg));
+  }
+}
+
+/* 3D gyroscopic tumble — rotate around X, Y *and* Z at once so the flake
+   precesses like a coin caught in the wind instead of turning like a wheel.
+   `perspective()` lives *inside* the keyframe (first function), sized as a
+   multiple of the particle size, so the X/Y rotations read as depth rather than
+   a flat squash. The end values are whole multiples of the shape's symmetry, so
+   this loops seamlessly. */
+@keyframes seasonal-tumble {
+  from {
+    transform: perspective(var(--perspective, 360px)) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  to {
+    transform: perspective(var(--perspective, 360px))
+      rotateX(var(--tumble-x, 0deg))
+      rotateY(var(--tumble-y, 0deg))
+      rotateZ(var(--tumble-z, 360deg));
+  }
+}
+
+/* Full-viewport, non-interactive layer that holds the particles. Written as plain
+   CSS (not Tailwind utilities) so the effect is self-contained: a consumer that
+   imports `theme.css` gets the whole effect without having to register this
+   package as a Tailwind `@source`. */
+.seasonal-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* The mover carries the fall (`transform`) and horizontal drift (`translate`).
+   `left` is set inline so particles scatter horizontally across the viewport. */
+.particle-mover {
+  position: absolute;
+  top: 0;
+  display: block;
+  animation:
+    seasonal-fall var(--fall-duration, 12s) linear var(--fall-delay, 0s) infinite,
+    seasonal-drift var(--sway-duration, 6s) ease-in-out var(--sway-delay, 0s) infinite alternate;
+}
+
+/* The turner carries the gyroscopic tumble (`transform`, with perspective) and
+   the in-plane rock (`rotate`). It sits directly under the mover — no wrapper
+   between them (requirement 5). */
+.particle-turner {
+  display: block;
+  animation:
+    seasonal-tumble var(--fall-duration, 12s) linear var(--fall-delay, 0s) infinite,
+    seasonal-rock var(--sway-duration, 6s) ease-in-out var(--sway-delay, 0s) infinite alternate;
+}
+
+/* The parallax copy renders the visual twice, P apart. The static +P offset
+   lives on the copy turner as an individual `translate`, which resolves
+   outermost (before the rock/tumble), so it stays a rigid vertical offset and
+   the rock and tumble never swing it in an arc. */
+.particle-turner--copy {
+  translate: 0 var(--fall-travel, 124vh);
+}
+
+/* ── Summer clouds (drift horizontally, loop forever) ─────────────────── */
+
+@keyframes cloud-drift {
+  from {
+    transform: translateX(calc(-1 * var(--cloud-width, 240px)));
+  }
+  to {
+    transform: translateX(calc(100vw + var(--cloud-width, 240px)));
+  }
+}
+
+@keyframes cloud-bob {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-1 * var(--cloud-bob-distance, 6px)));
+  }
+}
+
+.cloud {
+  position: absolute;
+  left: 0;
+  display: block;
+  will-change: transform;
+  animation-name: cloud-drift;
+  animation-duration: var(--cloud-duration, 70s);
+  animation-timing-function: linear;
+  animation-delay: var(--cloud-delay, 0s);
+  animation-iteration-count: infinite;
+}
+
+/* Clouds tile for the parallax wrap the same way particles do: two copies P
+   apart. The static +P offset is a `translate` on a dedicated wrapper, so it
+   commutes with the horizontal drift (which lives on `.cloud` above). */
+.cloud--wrap {
+  display: block;
+}
+
+.cloud--wrap--copy {
+  translate: 0 var(--fall-travel, 124vh);
+}
+
+.cloud__bob {
+  display: block;
+  animation-name: cloud-bob;
+  animation-duration: var(--cloud-bob-duration, 7s);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .particle-mover,
+  .cloud {
+    display: none;
+  }
+}
+
+/* ── Season switcher icon (static — idle motion removed) ── */
+.season-switcher__icon {
+  display: inline-flex;
+}

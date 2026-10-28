@@ -2,6 +2,8 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Source_Sans_3 } from "next/font/google"
 import { Nav } from "@/components/client/navigation/nav"
+import { SeasonalEffects } from "@/packages/harvest/src"
+import { SEASON_SCRIPT } from "@/packages/harvest/src/seasons"
 import "./globals.css"
 
 const sourceSans = Source_Sans_3({
@@ -23,8 +25,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={sourceSans.className}>
-        <Nav />
-        {children}
+        <script dangerouslySetInnerHTML={{ __html: SEASON_SCRIPT }} />
+        <SeasonalEffects />
+        <div className="relative z-10">
+          <Nav />
+          {children}
+        </div>
       </body>
     </html>
   )
