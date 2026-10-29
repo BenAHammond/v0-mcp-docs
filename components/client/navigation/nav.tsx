@@ -25,9 +25,9 @@ type Layer = {
  * SSR render and the client-side morph animation.
  */
 const LAYERS: Layer[] = [
-  { pts: [[2, 7.5], [5, 1.5], [9, 7.5], [12.5, 2], [16, 7.5], [19.5, 1.5], [22, 6]], amp: 1.0, speed: 1.2, phase: 0.0, k: 0.5 },
-  { pts: [[2, 11], [4.5, 9.5], [7, 11.5], [9.5, 9], [12, 11.5], [14.5, 9.5], [17, 11], [19.5, 9.5], [22, 11]], amp: 0.7, speed: 1.6, phase: 1.2, k: 0.6 },
-  { pts: [[2, 17.5], [6, 22], [10, 17], [14.5, 16.5], [18, 22.5], [21, 17]], amp: 1.1, speed: 0.8, phase: 2.5, k: 0.4 },
+  { pts: [[2, 7.5], [5, 1.5], [9, 7.5], [12.5, 2], [16, 7.5], [19.5, 1.5], [22, 6]], amp: 1.2, speed: 1.4, phase: 0.0, k: 0.5 },
+  { pts: [[2, 11], [4.5, 9.5], [7, 11.5], [9.5, 9], [12, 11.5], [14.5, 9.5], [17, 11], [19.5, 9.5], [22, 11]], amp: 0.8, speed: 1.6, phase: 1.2, k: 0.6 },
+  { pts: [[2, 17.5], [6, 22], [10, 17], [14.5, 16.5], [18, 22.5], [21, 17]], amp: 1.3, speed: 1.1, phase: 2.5, k: 0.4 },
 ]
 
 const pointsAttr = (pts: Point[]) => pts.map(([x, y]) => `${x},${y}`).join(" ")
@@ -64,7 +64,7 @@ function BrandMark() {
   }, [])
 
   return (
-    <svg viewBox="0 0 24 24" className="h-5 w-5 text-brand" fill="none" aria-hidden="true">
+    <svg viewBox="0 0 24 24" className="h-6 w-6 text-brand" fill="none" aria-hidden="true">
       <g stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="miter">
         {LAYERS.map((layer, i) => (
           <polyline
