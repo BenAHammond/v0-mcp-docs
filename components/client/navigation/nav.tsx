@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const links = [
   { href: "/getting-started", label: "install" },
@@ -11,17 +11,70 @@ const links = [
 
 const github = "https://github.com/BenAHammond/v0-mcp-server"
 
+type Point = [number, number]
+type Layer = {
+  pts: Point[]
+  amp: number
+  speed: number
+  phase: number
+  k: number
+}
+
 /**
- * Brand mark: a few jagged zig-zag lines, each with its own rhythm — the
- * randomness is the point.
+ * The three zig-zag lines as data — one source of truth for both the static
+ * SSR render and the client-side morph animation.
+ */
+const LAYERS: Layer[] = [
+  { pts: [[2, 7.5], [5, 1.5], [9, 7.5], [12.5, 2], [16, 7.5], [19.5, 1.5], [22, 6]], amp: 1.0, speed: 1.2, phase: 0.0, k: 0.5 },
+  { pts: [[2, 11], [4.5, 9.5], [7, 11.5], [9.5, 9], [12, 11.5], [14.5, 9.5], [17, 11], [19.5, 9.5], [22, 11]], amp: 0.7, speed: 1.6, phase: 1.2, k: 0.6 },
+  { pts: [[2, 17.5], [6, 22], [10, 17], [14.5, 16.5], [18, 22.5], [21, 17]], amp: 1.1, speed: 0.8, phase: 2.5, k: 0.4 },
+]
+
+const pointsAttr = (pts: Point[]) => pts.map(([x, y]) => `${x},${y}`).join(" ")
+
+/**
+ * Brand mark: jagged zig-zag lines that slowly morph — a traveling wave passes
+ * along each line, so the peaks and valleys drift. The randomness is the point.
  */
 function BrandMark() {
+  const refs = useRef<(SVGPolylineElement | null)[]>([])
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    let raf = 0
+    const start = performance.now()
+
+    const tick = (now: number) => {
+      const t = (now - start) / 1000
+      LAYERS.forEach((layer, li) => {
+        const el = refs.current[li]
+        if (!el) return
+        const pts = layer.pts.map(([x, y]) => {
+          const dy = layer.amp * Math.sin(t * layer.speed + x * layer.k + layer.phase)
+          return `${x},${(y + dy).toFixed(2)}`
+        })
+        el.setAttribute("points", pts.join(" "))
+      })
+      raf = requestAnimationFrame(tick)
+    }
+
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [])
+
   return (
     <svg viewBox="0 0 24 24" className="h-5 w-5 text-brand" fill="none" aria-hidden="true">
       <g stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="miter">
-        <polyline points="2,7.5 5,1.5 9,7.5 12.5,2 16,7.5 19.5,1.5 22,6" />
-        <polyline points="2,11 4.5,9.5 7,11.5 9.5,9 12,11.5 14.5,9.5 17,11 19.5,9.5 22,11" />
-        <polyline points="2,17.5 6,22 10,17 14.5,16.5 18,22.5 21,17" />
+        {LAYERS.map((layer, i) => (
+          <polyline
+            key={i}
+            ref={(el) => {
+              refs.current[i] = el
+            }}
+            points={pointsAttr(layer.pts)}
+          />
+        ))}
       </g>
     </svg>
   )
