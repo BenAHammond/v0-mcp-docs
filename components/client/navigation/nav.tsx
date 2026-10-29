@@ -32,28 +32,38 @@ const LAYERS: Layer[] = [
 
 const pointsAttr = (pts: Point[]) => pts.map(([x, y]) => `${x},${y}`).join(" ")
 
+/** Rainbow hues, red → violet. */
+const RAINBOW = ["#ff4d4d", "#ff9f1a", "#ffe14d", "#4ddb5e", "#4dc3ff", "#7d6bff", "#d24dff"]
+
 /**
  * Brand mark: jagged zig-zag lines that slowly morph — a traveling wave passes
- * along each line, so the peaks and valleys drift. Stroked with a rainbow
- * gradient whose orientation is randomized on each load.
+ * along each line, so the peaks and valleys drift. Each line carries its own
+ * rainbow gradient, independently oriented and hue-rotated on load.
  */
 function BrandMark() {
   const refs = useRef<(SVGPolylineElement | null)[]>([])
-  const gradientRef = useRef<SVGLinearGradientElement>(null)
+  const gradientRefs = useRef<(SVGLinearGradientElement | null)[]>([])
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
 
-    // Randomize the rainbow's orientation on each load.
-    if (gradientRef.current) {
+    // Give each line its own rainbow: a random orientation and a random
+    // starting hue, so the distribution differs per line.
+    gradientRefs.current.forEach((g) => {
+      if (!g) return
       const angle = Math.random() * Math.PI * 2
       const c = 12
       const r = 17
-      gradientRef.current.setAttribute("x1", (c - r * Math.cos(angle)).toFixed(2))
-      gradientRef.current.setAttribute("y1", (c - r * Math.sin(angle)).toFixed(2))
-      gradientRef.current.setAttribute("x2", (c + r * Math.cos(angle)).toFixed(2))
-      gradientRef.current.setAttribute("y2", (c + r * Math.sin(angle)).toFixed(2))
-    }
+      g.setAttribute("x1", (c - r * Math.cos(angle)).toFixed(2))
+      g.setAttribute("y1", (c - r * Math.sin(angle)).toFixed(2))
+      g.setAttribute("x2", (c + r * Math.cos(angle)).toFixed(2))
+      g.setAttribute("y2", (c + r * Math.sin(angle)).toFixed(2))
+
+      const rot = Math.floor(Math.random() * RAINBOW.length)
+      Array.from(g.querySelectorAll("stop")).forEach((stop, j) => {
+        stop.setAttribute("stop-color", RAINBOW[(j + rot) % RAINBOW.length])
+      })
+    })
 
     let raf = 0
     const start = performance.now()
@@ -79,23 +89,33 @@ function BrandMark() {
   return (
     <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" aria-hidden="true">
       <defs>
-        <linearGradient id="brand-rainbow" gradientUnits="userSpaceOnUse" x1="0" y1="12" x2="24" y2="12" ref={gradientRef}>
-          <stop offset="0" stopColor="#ff4d4d" />
-          <stop offset="0.17" stopColor="#ff9f1a" />
-          <stop offset="0.33" stopColor="#ffe14d" />
-          <stop offset="0.5" stopColor="#4ddb5e" />
-          <stop offset="0.67" stopColor="#4dc3ff" />
-          <stop offset="0.83" stopColor="#7d6bff" />
-          <stop offset="1" stopColor="#d24dff" />
-        </linearGradient>
+        {LAYERS.map((_, i) => (
+          <linearGradient
+            key={i}
+            id={`brand-rainbow-${i}`}
+            gradientUnits="userSpaceOnUse"
+            x1="0"
+            y1="12"
+            x2="24"
+            y2="12"
+            ref={(el) => {
+              gradientRefs.current[i] = el
+            }}
+          >
+            {RAINBOW.map((color, j) => (
+              <stop key={j} offset={(j / (RAINBOW.length - 1)).toFixed(2)} stopColor={color} />
+            ))}
+          </linearGradient>
+        ))}
       </defs>
-      <g stroke="url(#brand-rainbow)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="miter">
+      <g strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="miter">
         {LAYERS.map((layer, i) => (
           <polyline
             key={i}
             ref={(el) => {
               refs.current[i] = el
             }}
+            stroke={`url(#brand-rainbow-${i})`}
             points={pointsAttr(layer.pts)}
           />
         ))}
