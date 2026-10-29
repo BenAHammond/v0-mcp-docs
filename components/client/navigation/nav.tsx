@@ -25,22 +25,35 @@ type Layer = {
  * SSR render and the client-side morph animation.
  */
 const LAYERS: Layer[] = [
-  { pts: [[2, 7.5], [5, 1.5], [9, 7.5], [12.5, 2], [16, 7.5], [19.5, 1.5], [22, 6]], amp: 1.2, speed: 1.4, phase: 0.0, k: 0.5 },
+  { pts: [[2, 7.5], [5, 1.5], [9, 7.5], [12.5, 2], [16, 7.5], [19.5, 1.5], [22, 6]], amp: 1.2, speed: 1.6, phase: 0.0, k: 0.5 },
   { pts: [[2, 11], [4.5, 9.5], [7, 11.5], [9.5, 9], [12, 11.5], [14.5, 9.5], [17, 11], [19.5, 9.5], [22, 11]], amp: 0.8, speed: 1.6, phase: 1.2, k: 0.6 },
-  { pts: [[2, 17.5], [6, 22], [10, 17], [14.5, 16.5], [18, 22.5], [21, 17]], amp: 1.3, speed: 1.1, phase: 2.5, k: 0.4 },
+  { pts: [[2, 17.5], [6, 22], [10, 17], [14.5, 16.5], [18, 22.5], [21, 17]], amp: 1.3, speed: 1.6, phase: 2.5, k: 0.4 },
 ]
 
 const pointsAttr = (pts: Point[]) => pts.map(([x, y]) => `${x},${y}`).join(" ")
 
 /**
  * Brand mark: jagged zig-zag lines that slowly morph — a traveling wave passes
- * along each line, so the peaks and valleys drift. The randomness is the point.
+ * along each line, so the peaks and valleys drift. Stroked with a rainbow
+ * gradient whose orientation is randomized on each load.
  */
 function BrandMark() {
   const refs = useRef<(SVGPolylineElement | null)[]>([])
+  const gradientRef = useRef<SVGLinearGradientElement>(null)
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    // Randomize the rainbow's orientation on each load.
+    if (gradientRef.current) {
+      const angle = Math.random() * Math.PI * 2
+      const c = 12
+      const r = 17
+      gradientRef.current.setAttribute("x1", (c - r * Math.cos(angle)).toFixed(2))
+      gradientRef.current.setAttribute("y1", (c - r * Math.sin(angle)).toFixed(2))
+      gradientRef.current.setAttribute("x2", (c + r * Math.cos(angle)).toFixed(2))
+      gradientRef.current.setAttribute("y2", (c + r * Math.sin(angle)).toFixed(2))
+    }
 
     let raf = 0
     const start = performance.now()
@@ -64,8 +77,19 @@ function BrandMark() {
   }, [])
 
   return (
-    <svg viewBox="0 0 24 24" className="h-6 w-6 text-brand" fill="none" aria-hidden="true">
-      <g stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="miter">
+    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="brand-rainbow" gradientUnits="userSpaceOnUse" x1="0" y1="12" x2="24" y2="12" ref={gradientRef}>
+          <stop offset="0" stopColor="#ff4d4d" />
+          <stop offset="0.17" stopColor="#ff9f1a" />
+          <stop offset="0.33" stopColor="#ffe14d" />
+          <stop offset="0.5" stopColor="#4ddb5e" />
+          <stop offset="0.67" stopColor="#4dc3ff" />
+          <stop offset="0.83" stopColor="#7d6bff" />
+          <stop offset="1" stopColor="#d24dff" />
+        </linearGradient>
+      </defs>
+      <g stroke="url(#brand-rainbow)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="miter">
         {LAYERS.map((layer, i) => (
           <polyline
             key={i}
