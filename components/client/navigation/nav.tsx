@@ -12,16 +12,16 @@ const links = [
 const github = "https://github.com/BenAHammond/v0-mcp-server"
 
 /**
- * Brand mark: a few jagged zig-zag lines with tall peaks and valleys — the
+ * Brand mark: a few jagged zig-zag lines, each with its own rhythm — the
  * randomness is the point.
  */
 function BrandMark() {
   return (
     <svg viewBox="0 0 24 24" className="h-5 w-5 text-brand" fill="none" aria-hidden="true">
       <g stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="miter">
-        <polyline points="2,8 5.5,1.5 9,8.5 12.5,1.5 16,8 20,2.5" />
-        <polyline points="2,15.5 5.5,9.5 9,16 12.5,9 16,15.5 20,10" />
-        <polyline points="3.5,22.5 7,16.5 11,22.5 14.5,16.5 18.5,22.5 21,17" />
+        <polyline points="2,7.5 5,1.5 9,7.5 12.5,2 16,7.5 19.5,1.5 22,6" />
+        <polyline points="2,11 4.5,9.5 7,11.5 9.5,9 12,11.5 14.5,9.5 17,11 19.5,9.5 22,11" />
+        <polyline points="2,17.5 6,22 10,17 14.5,16.5 18,22.5 21,17" />
       </g>
     </svg>
   )
