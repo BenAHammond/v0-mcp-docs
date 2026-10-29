@@ -75,7 +75,7 @@ export function Hero() {
           // mcp server &middot; stdio &middot; 3 tools
         </p>
         <h1 className="font-serif text-4xl leading-[1.05] tracking-tight text-foreground text-balance sm:text-5xl lg:text-[3.4rem]">
-          Plug v0&apos;s UI model into your workflow.
+          Bring v0&apos;s UI expertise into your workflow.
         </h1>
         <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
           v0&apos;s model behind an MCP server. Prompt a component, iterate a chat,
